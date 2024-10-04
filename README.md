@@ -1,5 +1,5 @@
 <h1 align="center"> Trường đại học Công nghệ thành phố Hồ Chí Minh <br/>
-    Đồ án Cơ sở - 
+    Đồ án Chuyên ngành - 
     Ứng dụng Android hỗ trợ bệnh nhân đăng ký khám bệnh 
 </h1>
 
