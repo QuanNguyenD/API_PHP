@@ -97,7 +97,7 @@ class ComposerStaticInitba66cde448ae49b2ff8371c75acf22f5
         '4af1dca6db8c527c6eed27bff85ff0e5' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/yaz.php',
         'fe43ca06499ac37bc2dedd823af71eb5' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/zip.php',
         '356736db98a6834f0a886b8d509b0ecd' => __DIR__ . '/..' . '/thecodingmachine/safe/generated/zlib.php',
-        '35d1e42abf4d8c181ae544a92d8f3f6a' => __DIR__ . '/..' . '/kint-php/kint/Kint.class.php',
+        '3917c79c5052b270641b5a200963dbc2' => __DIR__ . '/..' . '/kint-php/kint/init.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -126,6 +126,10 @@ class ComposerStaticInitba66cde448ae49b2ff8371c75acf22f5
         'M' => 
         array (
             'Moment\\' => 7,
+        ),
+        'K' => 
+        array (
+            'Kint\\' => 5,
         ),
         'G' => 
         array (
@@ -209,6 +213,10 @@ class ComposerStaticInitba66cde448ae49b2ff8371c75acf22f5
         'Moment\\' => 
         array (
             0 => __DIR__ . '/..' . '/fightbulc/moment/src',
+        ),
+        'Kint\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kint-php/kint/src',
         ),
         'Gettext\\Languages\\' => 
         array (

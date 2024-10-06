@@ -20,6 +20,7 @@ return array(
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
     'OTPHP\\' => array($vendorDir . '/spomky-labs/otphp/src'),
     'Moment\\' => array($vendorDir . '/fightbulc/moment/src'),
+    'Kint\\' => array($vendorDir . '/kint-php/kint/src'),
     'Gettext\\Languages\\' => array($vendorDir . '/gettext/languages/src'),
     'Gettext\\' => array($vendorDir . '/gettext/gettext/src'),
     'Firebase\\JWT\\' => array($vendorDir . '/firebase/php-jwt/src'),

@@ -1,7 +1,7 @@
 <?php
 
 use Gettext\Loader\PoLoader;
-
+use Gettext\Translations;
 class App{
 
     protected $router;
@@ -106,13 +106,13 @@ class App{
 
         
         
-        $Translator = new Gettext\Translator;
+        
         $loader = new PoLoader();
         // Load app. locale
         $path = APPPATH . "/locale/" . ACTIVE_LANG . "/messages.po";
         if (file_exists($path)) {
             $translations = $loader -> loadFile($path);
-            $Translator->loadTranslations($translations);
+            
         }
         //Cái này phải coi lại
         // Load theme locale
@@ -124,7 +124,7 @@ class App{
 
         
 
-        $Translator->register(); // Register global functions
+        //$translations->register(); // Register global functions
 
         // Set other library locales
         try {
