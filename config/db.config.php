@@ -9,5 +9,6 @@ define("USER_NAME","root");
 
 //table config 
 
-// define("TABEL_PREFIX","tn_");
+define("TB_PREFIX","tn_");
 // define("TABLE_APPOINTMENTS","appoitnments");
+define("TB_DRUGS","drugs");

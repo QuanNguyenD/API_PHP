@@ -34,12 +34,19 @@ if (ENVIRONMENT == "installation") {
     echo 'Environment is invalid. Please contact developer for more information.';
     exit;
 }
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+header('Content-Type: application/json');
+require_once APPPATH.'/Controller/DrugController.php';
 
-
-
+require_once APPPATH.'/config/config.php';
 require_once APPPATH. '/autoload.php';
-echo 'Current PHP version: ' . PHP_VERSION;
 
-$app = new App();
-$app ->process();
+
+
+$controller = new DrugController();
+$controller->getDrugs();
+
+//$app = new App();
+//$app ->process();
 

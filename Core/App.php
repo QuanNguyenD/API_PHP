@@ -8,8 +8,8 @@ class App{
     protected $controller;
     protected $plugins;
 
-    use Gettext\Loader\PoLoader;
-    private function db(){
+    
+    private static function db(){
         $config = [
             'driver' => DATA_BASE,
             'host' => DB_HOST,
@@ -28,6 +28,9 @@ class App{
         return $connection;
         
 
+    }
+    public static function getConnection() {
+        return self::db(); // Gọi phương thức db() từ bên trong lớp
     }
     //Khi không sử dụng bí danh, 
     //có thể khởi tạo trình xử lý QueryBuilder riêng biệt, 
