@@ -16,6 +16,9 @@ class DrugModel{
         public function getAllDrugs(){
             return $this->qb->table(TB_PREFIX.TB_DRUGS)->get();
         }
+        public function getDrug($id){
+            return $this->qb->table(TB_PREFIX.TB_DRUGS)->where(TB_PREFIX.TB_DRUGS.".id", "=", $id)->first();
+        }
 
 
 

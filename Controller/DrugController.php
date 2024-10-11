@@ -3,15 +3,7 @@ require_once APPPATH.'/Model/DrugModel.php';
 
 class DrugController extends Controller{
 
-    public function process()
-    {
-            
-            $request_method = Input::method();
-            if($request_method === 'GET')
-            {
-                $this -> getAllDrugs();
-            }
-    }
+    
 
 
     public function getAllDrugs(){
@@ -27,10 +19,20 @@ class DrugController extends Controller{
         }
     }
 
-    public function getDrugById(){
+    public function getDrugById($id){
+        $drugModel = new DrugModel();
+        $drug = $drugModel->getDrug($id);
+
+        if(!empty($drug)){
+            echo json_encode($drug);
+        }
+        else{
+            echo json_encode(["message" =>"No drug found"]);
+        }
+
 
     }
-    // Kiểm tra xem có dữ liệu hay không
+    
     
 
 
