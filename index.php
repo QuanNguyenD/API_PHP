@@ -34,19 +34,30 @@ if (ENVIRONMENT == "installation") {
     echo 'Environment is invalid. Please contact developer for more information.';
     exit;
 }
+
+// Define Base Path (for routing)
+$base_path = trim(str_replace("\\", "/", dirname($_SERVER["SCRIPT_NAME"])), "/");
+$base_path = $base_path ? "/" . $base_path : "";
+
+define("BASEPATH", $base_path);
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-header('Content-Type: application/json');
-require_once APPPATH.'/Controller/DrugController.php';
 
+header('Content-Type: application/json');
+
+require_once APPPATH.'/Controller/DrugController.php';
 require_once APPPATH.'/config/config.php';
 require_once APPPATH. '/autoload.php';
+require_once APPPATH.'/Core/App.php';
 
 
 
-$controller = new DrugController();
-$controller->getDrugs();
 
-//$app = new App();
-//$app ->process();
+
+$app = new App();
+$app ->process();
+
+
+
+
 

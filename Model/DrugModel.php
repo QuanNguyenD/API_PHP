@@ -1,6 +1,6 @@
 <?php
 require APPPATH.'/Core/App.php';
-class DurgModel{
+class DrugModel{
     protected $db;
     protected $qb;
         /**
