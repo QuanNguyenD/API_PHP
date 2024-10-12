@@ -15,8 +15,18 @@
 // }
 // $langslug = $langs ? "[".implode("|", $langs).":lang]" : "";
 
+
+
+
+/**************************LOGIN***************************** */
+$router->map('GET|POST','/login/?','LoginController#process');
+
+
+
 /*************************** DRUGS ************************** */
 // App::addRoute("GET|POST", "/drugs/?", "Drugs");
 // App::addRoute("GET", "/drugs/[i:id]/?", "Drug");
-$router->map('GET', '/drugs', 'DrugController#getAllDrugs');
-$router->map('GET', '/drug/[i:id]', 'DrugController#getDrugById');
+$router->map('GET', '/drugs', 'DrugsController#process');
+$router->map('GET', '/drug/[i:id]', 'DrugController#process');
+
+
