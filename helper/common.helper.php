@@ -484,6 +484,13 @@ function isValidJSON($str) {
     return json_last_error() == JSON_ERROR_NONE;
  }
 
+ function isNumber($number){
+    $result = preg_match("/^\\d+$/", $number);
+    return $result;
+}
+
+
+
 
 
 

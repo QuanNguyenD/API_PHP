@@ -18,12 +18,12 @@ class DoctorController extends Controller{
     }
 
     public function getAllDoc(){
-        $drugModel = new DoctorModel(); // Khởi tạo model Drug
-        $drugs = $drugModel->getAllDoc();  // Lấy tất cả các thuốc từ model
+        $docModel = new DoctorModel(); // Khởi tạo model Doc
+        $docs = $docModel->getAllDoc();  // Lấy tất cả bác sĩ từ model
         
-        if(!empty($drugs)) {
+        if(!empty($docs)) {
             // Nếu có, trả về dữ liệu dưới dạng JSON
-            echo json_encode($drugs);
+            echo json_encode($docs);
         } else {
             // Nếu không có dữ liệu, trả về thông báo lỗi
             echo json_encode(["message" => "No doc found."]);

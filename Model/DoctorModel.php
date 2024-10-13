@@ -7,8 +7,7 @@ class DoctorModel extends DataEntry{
     public function __construct($uniqid=0)
     {
         
-        $this->db = App::getConnection();
-        
+        $this->db = App::getConnection();     
 		$this->qb = new \Pixie\QueryBuilder\QueryBuilderHandler($this->db);
         parent::__construct();
         $this->select($uniqid);
