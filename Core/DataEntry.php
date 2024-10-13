@@ -42,24 +42,25 @@
             // Kiểm tra xem $filed có là một chuỗi không, và nó có rỗng không
             if(is_string($field) && $field){
                 if($parse){
-                    $field = explode(".",$field);
+                    $fields = explode(".",$field);
+                    
                 }
                 //Nếu mảng $fields không rỗng và có nhiều hơn một phần tử 
                 //thì có cấu trúc lồng nhau.
-                if(!empty($field) && count($field)> 1){
+                if(!empty($fields) && count($fields)> 1){
                     //Xử lý các trường lồng nhau
 
                     //Gán column là phần tử đầu tiên trong mảng $field
-                    $column = $field[0];
+                    $column = $fields[0];
                     //Loại bỏ phần tử đầu tiên trong mảng
-                    array_shift($field);
+                    array_shift($fields);
                     // đếm số phần tử còn lại trong mảng và gán vào $total
-                    $total = count($field);
+                    $total = count($fields);
 
                     // biến $newval sẽ được cập nhật sau mỗi lần lặp
                     $newval = $value;
                     for($i= $total-1; $i>=0; $i--){
-                        $newval = array($field[$i] => $newval);
+                        $newval = array($fields[$i] => $newval);
                     }
 
                     $currentval = json_decode($this ->get($column), true);
@@ -69,6 +70,7 @@
 
                     $this -> data[$column] = json_encode(array_replace_recursive($currentval, $newval));
                 }else{
+                    
                     $this->data[$field] = $value;
                 }
                 

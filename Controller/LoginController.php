@@ -18,8 +18,18 @@ class LoginController extends Controller{
     private function login(){
 
         $this->resp->result = 0;
-        $type = Input::post("type");
-        $password = Input::post("password");
+        // $type = Input::post("type");
+        // $password = Input::post("password");
+        
+        $input = file_get_contents('php://input');
+        $data = json_decode($input, true);
+        $type = $data['type']?? null;
+        $password = $data['password'] ?? null;
+        
+        
+        
+        
+        
         $data = [];
         $payload = [];
         $msg = [];
@@ -59,9 +69,15 @@ class LoginController extends Controller{
     private function loginByDoctor(){
         /**Step 1 - declare */
         $this->resp->result = 0;
-        $password = Input::post("password");
-        $email = Input::post("email");
+        // $password = Input::post("password");
+        // $email = Input::post("email");
+        
+        $input = file_get_contents('php://input');
+        $data = json_decode($input, true);
 
+        $email = $data['email'] ?? null;
+        $password = $data['password'] ?? null;
+        
         /**Step 2 - is email empty ? */
         if( !$email )
         {
@@ -71,7 +87,7 @@ class LoginController extends Controller{
 
         /**Step 3 - does the doctor exist? */
         $Doctor = Controller::model("Doctor", $email);
-        if( !$Doctor->isAvailable() || 
+        if( !$Doctor->isAvailable() ||
             $Doctor->get("active") != 1 || 
             !password_verify($password, $Doctor->get("password")) )
         {

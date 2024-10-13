@@ -1,6 +1,7 @@
 <?php
 require APPPATH.'/Core/App.php';
-class DrugModel{
+require APPPATH.'/Core/DataEntry.php';
+class DrugModel extends DataEntry{
     protected $db;
     protected $qb;
         /**

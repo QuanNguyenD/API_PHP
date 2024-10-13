@@ -23,6 +23,9 @@ $router->map('GET|POST','/login/?','LoginController#process');
 
 
 
+$router->map('GET','/doc','DoctorController#process');
+
+
 /*************************** DRUGS ************************** */
 // App::addRoute("GET|POST", "/drugs/?", "Drugs");
 // App::addRoute("GET", "/drugs/[i:id]/?", "Drug");

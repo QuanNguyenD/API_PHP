@@ -2,8 +2,6 @@
 	/**
 	 * Get value of input (get, post, request, session, cookie)
 	 *
-	 * @version 1.0
-	 * @author Onelab <hello@onelab.co> 
 	 * 
 	 */
 	class Input

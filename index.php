@@ -48,6 +48,7 @@ header('Content-Type: application/json');
 require_once APPPATH.'/Controller/DrugController.php';
 require_once APPPATH.'/Controller/LoginController.php';
 require_once APPPATH.'/Controller/DrugsController.php';
+require_once APPPATH.'/Controller/DoctorController.php';
 require_once APPPATH.'/config/config.php';
 require_once APPPATH. '/autoload.php';
 require_once APPPATH.'/Core/App.php';

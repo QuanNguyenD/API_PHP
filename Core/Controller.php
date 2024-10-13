@@ -45,7 +45,7 @@ class Controller
             $file = $name[0];
             $class = $name[1];
         } else {
-            $file = APPPATH."/models/".$name."Model.php";
+            $file = APPPATH."/Model/".$name."Model.php";
             $class = $name."Model";
         }
 
