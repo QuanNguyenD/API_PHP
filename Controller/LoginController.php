@@ -135,9 +135,15 @@ class LoginController extends Controller{
     {
         /**Step 1 - declare */
         $this->resp->result = 0;
-        $password = Input::post("password");
-        $phone = Input::post("phone");
-        $phone = "0123456987";
+        //$password = Input::post("password");
+        //$phone = Input::post("phone");
+
+        $input = file_get_contents('php://input');
+        $data = json_decode($input, true);
+
+        $password = $data['email'] ?? null;
+        $phone = $data['phone'] ?? null;
+        
         $hashPassword = "";
         $data = [];
 
