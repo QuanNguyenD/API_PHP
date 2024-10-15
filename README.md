@@ -33,8 +33,10 @@ Mô tả sơ lược đồ án:
 - Cung cấp các dịch vụ, tài nguyên và thao tác xử lý dữ liệu từ server
 - Xử lý các thao tác từ Android và Web
 - Công nghệ sử dụng: RESTful API, JWT (Token Authentication) 
+
 **WEB**:
 - Website được thiết kế dành riêng cho quản trị viên (admin) để quản lý hệ thống
+
 **ANDROID**
 - Ứng dụng dành cho khách hàng để sử dụng các dịch vụ như đặt lịch khám và theo dõi khám bệnh
 - Công nghệ sử dụng: Android SDK, Retrofit để gọi API
