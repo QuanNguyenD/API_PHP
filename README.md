@@ -14,7 +14,9 @@
 # [**Lời mở đầu**](#lời-mở-đầu)
 
 Tên nhóm : MURKOFF
+
 Thành viên nhóm:
+
 |STT|Tên|MSVV|
 |---|---|----|
 |1|Nguyễn Quốc Anh Quân|2180609238|
@@ -28,6 +30,7 @@ Thành viên nhóm:
 * [**Ứng dụng Android**](https://github.com/duypham666/DACN_MURKOFF_CARE_ANDROID)
 
 Mô tả sơ lược đồ án:
+
 **API** : 
 - Là cầu nối giúp giao tiếp giữa Ứng dụng Android, WEB và Server
 - Cung cấp các dịch vụ, tài nguyên và thao tác xử lý dữ liệu từ server
