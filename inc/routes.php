@@ -32,4 +32,7 @@ $router->map('GET','/doc','DoctorController#process');
 $router->map('GET', '/drugs', 'DrugsController#process');
 $router->map('GET', '/drug/[i:id]', 'DrugController#process');
 
+/************************** SPECIALITY ******************************/
+$router->map('GET', '/speciality/[i:id]', 'SpecialityController#process');
+
 

@@ -141,7 +141,7 @@ class LoginController extends Controller{
         $input = file_get_contents('php://input');
         $data = json_decode($input, true);
 
-        $password = $data['email'] ?? null;
+        $password = $data['password'] ?? null;
         $phone = $data['phone'] ?? null;
         
         $hashPassword = "";
@@ -208,6 +208,7 @@ class LoginController extends Controller{
         {
             /**is password correct ? */
             $hashPassword = $result[0]->password;
+            
             if( !password_verify($password, $hashPassword ) )
             {
                 $this->resp->msg = "Your email or password is incorrect. Try again !";
