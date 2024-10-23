@@ -221,7 +221,7 @@ class LoginController extends Controller{
 
             
             /**yes, WELCOME BACK */
-            $msg = "Welcome back to UMBRELLA CORPORATION, ".$result[0]->name." !";
+            $msg = "Welcome back to MURKOFF CORPORATION, ".$result[0]->name." !";
             $data = array(
                 "id"    => (int)$result[0]->id,
                 "email" => $result[0]->email,

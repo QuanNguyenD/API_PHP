@@ -49,6 +49,25 @@ class DoctorModel extends DataEntry{
         public function getAllDoc(){
             return $this->qb->table('tn_doctors')->get();
         }
+		public function insert()
+		{
+			// Chèn dữ liệu từ $this->data vào bảng
+			$insertId = $this->qb->table(TB_PREFIX .TB_DOCTORS)
+								->insert($this->data);
+
+			// Nếu chèn thành công, lấy lại ID và cập nhật trong đối tượng
+			if ($insertId) {
+				$this->set("id", $insertId);  // Cập nhật ID mới được tạo vào đối tượng
+				$this->is_available = true;   // Đánh dấu rằng bản ghi này tồn tại
+				return $insertId;
+			}
+
+			return false;
+		}
+		public function save()
+		{
+    		return $this->isAvailable() ? $this->update() : $this->insert();
+		}
 
 
 

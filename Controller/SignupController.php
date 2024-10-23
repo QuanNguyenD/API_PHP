@@ -52,7 +52,7 @@ class SignupController extends Controller{
         $avatar = Input::post("avatar") ? Input::post("avatar"): "";
         $specialityId = 1;
         $roomId =1 ;
-        date_default_timezone_get('Asia/Ho_Chi_Minh');
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
 
     /**
      * Check output data
@@ -125,7 +125,7 @@ class SignupController extends Controller{
                     ->save();
 
             $this->resp->result = 1;
-            $this->resp->msg = "Doctor account is created successfully. Don't forget to check Gmail to get password !";
+            $this->resp->msg = "Doctor account is created successfully !";
             $this->resp->data = array(
                 "id" => (int)$Doctor->get("id"),
                 "email" => $Doctor->get("email"),

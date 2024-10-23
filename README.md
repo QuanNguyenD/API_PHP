@@ -43,3 +43,60 @@ Mô tả sơ lược đồ án:
 **ANDROID**
 - Ứng dụng dành cho khách hàng để sử dụng các dịch vụ như đặt lịch khám và theo dõi khám bệnh
 - Công nghệ sử dụng: Android SDK, Retrofit để gọi API
+
+
+# [**Mô tả đồ án(API)**](#mô-tả-đồ-án)
+
+## [**1. Login by Patient**](#login-by-patient)
+
+- **Mục đích** : Xử lý yêu cầu đăng nhập của bệnh nhân
+- **Method** : POST
+- **Body** : 
+
+    |Tên|Ý nghĩa|
+    |---|----|
+    |Type|patient, nếu `type = null` thì yêu cầu đăng nhập là từ bác sĩ.|
+    |Email|Email đăng ký tài khoản|
+    |Password|Mật khẩu tài khoản|
+
+<p align="center">
+    <img src="./photo/login_benhnhan_body.jpg">
+</p>
+
+- **Kết quả :**
+
+<p align="center">
+    <img src="./photo/ketqua_dangnhap_benhnhan.jpg">
+</p>
+
+## [**2. Sign Up by Patient**](#signup-by-patient)
+
+- **Mục đích** : Xử lý yêu cầu đăng nhập của bệnh nhân
+- **Method** : POST
+- **Mô tả** : Nếu bệnh nhân lần đầu tiên đăng nhập thì tài khoản sẽ được tạo
+- **Body** : 
+
+    |Tên|Ý nghĩa|
+    |---|----|
+    |Type|patient, nếu `type = null` thì yêu cầu đăng nhập là từ bác sĩ.|
+    |Email|Email đăng ký tài khoản|
+    |Password|Mật khẩu tài khoản|
+
+- **Kết quả :**
+
+<p align="center">
+    <img src="./photo/DangkytaikhoanBenhnhan.jpg">
+</p>
+
+## [**3. Sign Up by Doctor**](#signup-by-doctor)
+
+- **Mục đích :** Đăng ký tài khoản cho bác sĩ 
+- **Method** : POST
+- **Header** :
+
+    |Tên|Ý nghĩa|
+    |---|----|
+    |Content-Type|application/x-www-form-urlencoded|
+
+
+
