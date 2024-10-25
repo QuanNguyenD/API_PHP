@@ -134,6 +134,14 @@
         public function getAllSpeciality(){
             return $this->qb->table(TB_PREFIX.TB_SPECIALITIES)->get();
         }
+
+        //check duplicate 
+        public function checkDuplicate($name){
+            $query = $this->qb->table(TB_PREFIX.TB_SPECIALITIES)
+                            ->where(TB_PREFIX.TB_SPECIALITIES.".name","=",$name);
+            $result = $query->get();
+            return $result;                
+        }
         
 
 

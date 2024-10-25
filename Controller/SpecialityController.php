@@ -23,10 +23,11 @@
                 $decoded = JWT::decode($jwt, new Key(EC_SALT, 'HS256'));
                 // Lưu thông tin người dùng vào biến hoặc session
                 $_SESSION['AuthUser'] = $decoded; 
-                // $jsonDecoded = json_encode($decoded, JSON_PRETTY_PRINT);
-                // echo $jsonDecoded;
-                // $userRole = $decoded->name;
-                // echo($userRole);
+                //$jsonDecoded = json_encode($decoded, JSON_PRETTY_PRINT);
+                //echo $jsonDecoded;
+                //$userRole = $decoded->role;
+                //echo($userRole);
+                
             } catch (Exception $e) {
                 // Xử lý lỗi nếu token không hợp lệ
                 echo json_encode(["message" => "Token is invalid or expired."]);
@@ -51,6 +52,12 @@
                     echo json_encode(["message" => "ID is required"]);
                 }
             }
+            elseif($request_method === 'POST'){
+                if($decoded->role !="menber"){
+                    $this->resp->msg = "You are not admin & you can't do this action !";
+                    $this->jsonecho();
+                }
+            }
 
         }
 
@@ -60,7 +67,7 @@
             try{
                 $SpecialityModel = new SpecialityModel();
                 $Speciality = $SpecialityModel->getSpeciality($id);
-
+                
                 if( empty($Speciality) )
                 {
                     $this->resp->msg = "Speciality is not available";

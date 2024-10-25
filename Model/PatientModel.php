@@ -83,6 +83,16 @@
     		return $this->isAvailable() ? $this->update() : $this->insert();
 		}
 
+		public function update()
+		{
+			if(!$this->isAvailable()){
+				return false;
+			}
+			$update = $this->qb->table(TB_PREFIX.TB_PATIENTS)->where("id","=",$this->get("id"))->update($this->data);
+
+			return $update;
+		}
+
 
 
     }

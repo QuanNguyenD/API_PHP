@@ -35,6 +35,6 @@ $router->map('GET', '/drug/[i:id]', 'DrugController#process');
 
 /************************** SPECIALITY ******************************/
 $router->map('GET', '/speciality/[i:id]', 'SpecialityController#process');
-$router->map('GET','/specialities','SpecialitiesController#process');
+$router->map('GET|POST','/specialities','SpecialitiesController#process');
 
 

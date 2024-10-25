@@ -68,6 +68,19 @@ class DoctorModel extends DataEntry{
 		{
     		return $this->isAvailable() ? $this->update() : $this->insert();
 		}
+		public function update(){
+			if (!$this->isAvailable())
+	    		return false;
+			$update = $this->qb->table(TB_PREFIX .TB_DOCTORS)
+							->where("id", "=", $this->get("id"))
+							->update($this->data);
+
+			if ($update) {
+				return $update;
+			}
+
+				
+		}
 
 
 
