@@ -26,7 +26,7 @@
         }
         private function getAll(){
             $this->resp->result = 0;
-            $AuthUser = $this->getVariable("AuthUser");
+            
             $data = [];
 
                 

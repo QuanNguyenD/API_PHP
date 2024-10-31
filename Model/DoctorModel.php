@@ -46,11 +46,47 @@ class DoctorModel extends DataEntry{
 
 	    	return $this;
 	    }
+
+		public function extendDefaults()
+	    {
+	    	$defaults = array(
+	    		"email" => "",
+                "phone" => "",
+	    		"password" => "",
+	    		"name" => "",
+                "description" => "",
+                "price" => 0,
+				"role" => "admin",
+				"active" => "1",
+                "avatar" => "",
+				"create_at" => date("Y-m-d H:i:s"),
+				"update_at" => date("Y-m-d H:i:s"),
+                "speciality_id" => "",
+				"room_id" => "",
+				"recovery_token" => ""
+	    	);
+
+
+	    	foreach ($defaults as $field => $value) {
+	    		if (is_null($this->get($field)))
+	    			$this->set($field, $value);
+	    	}
+	    }
+
         public function getAllDoc(){
             return $this->qb->table('tn_doctors')->get();
         }
+		// public function getAllDoctor(){
+		// 	$query = $this->qb->table(TB_PREFIX.TB_DOCTORS)
+		// }
+
+
 		public function insert()
 		{
+			if ($this->isAvailable())
+	    		return false;
+
+	    	//$this->extendDefaults();
 			// Chèn dữ liệu từ $this->data vào bảng
 			$insertId = $this->qb->table(TB_PREFIX .TB_DOCTORS)
 								->insert($this->data);
@@ -73,7 +109,22 @@ class DoctorModel extends DataEntry{
 	    		return false;
 			$update = $this->qb->table(TB_PREFIX .TB_DOCTORS)
 							->where("id", "=", $this->get("id"))
-							->update($this->data);
+							->update(array(
+								"email" => $this->get("email"),
+								"phone" => $this->get("phone"),
+								"password" => $this->get("password"),
+								"name" => $this->get("name"),
+								"description" => $this->get("description"),
+								"price" => $this->get("price"),
+								"role" => $this->get("role"),
+								"active" => $this->get("active"),
+								"avatar" => $this->get("avatar"),
+								"create_at" => $this->get("create_at"),
+								"update_at" => $this->get("update_at"),
+								"speciality_id" => $this->get("speciality_id"),
+								"room_id" => $this->get("room_id"),
+								"recovery_token" => $this->get("recovery_token")
+							));
 
 			if ($update) {
 				return $update;
@@ -81,6 +132,30 @@ class DoctorModel extends DataEntry{
 
 				
 		}
+
+		public function delete(){
+			if(!$this->isAvailable())
+	    		return false;
+			$this->qb->table(TB_PREFIX .TB_DOCTORS)->where("id", "=", $this->get("id"))->delete();
+			$this->is_available = false;
+			return true;
+
+		}
+
+
+		/**
+	     * Check if account has administrative privileges
+	     * @return boolean 
+	     */
+	    public function isAdmin()
+	    {
+	    	if ($this->isAvailable() && 
+				in_array($this->get("role"), array("developer", "admin"))) {
+	    		return true;
+	    	}
+
+	    	return false;
+	    }
 
 
 

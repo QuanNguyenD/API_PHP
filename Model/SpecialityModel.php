@@ -107,10 +107,10 @@
         }
 
         /**
-         * Datele
+         * Detele
          * 
          */
-         public function dalete(){
+         public function delete(){
             if(!$this -> isAvailable())
                 return false;
 
@@ -121,6 +121,14 @@
             return true;
 
         }
+
+        public function CheckDoctor($id){
+            return $this->qb->table(TB_PREFIX.TB_DOCTORS)
+                    ->where(TB_PREFIX.TB_DOCTORS.".speciality_id","=",$id);
+            
+        }
+
+
         /**
          * GetSpecialityById
          * 
