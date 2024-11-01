@@ -76,9 +76,26 @@ class DoctorModel extends DataEntry{
         public function getAllDoc(){
             return $this->qb->table('tn_doctors')->get();
         }
-		// public function getAllDoctor(){
-		// 	$query = $this->qb->table(TB_PREFIX.TB_DOCTORS)
-		// }
+		 public function getAllDoctor(){
+		 	$query = $this->qb->table(TB_PREFIX.TB_DOCTORS)
+			->leftJoin(TB_PREFIX.TB_SPECIALITIES,TB_PREFIX.TB_SPECIALITIES.".id","=",TB_PREFIX.TB_DOCTORS.".speciality_id")
+			->leftJoin(TB_PREFIX.TB_ROOMS,TB_PREFIX.TB_ROOMS.".id","=",TB_PREFIX.TB_DOCTORS.".room_id")
+			->leftJoin(TB_PREFIX.TB_DOCTOR_AND_SERVICE,TB_PREFIX.TB_DOCTOR_AND_SERVICE.".doctor_id","=", TB_PREFIX.TB_DOCTORS.".id")
+			->leftJoin(TB_PREFIX.TB_SERVICES,TB_PREFIX.TB_SERVICES.".id","=",TB_PREFIX.TB_DOCTOR_AND_SERVICE.".service_id")
+			->groupBy(TB_PREFIX.TB_DOCTORS.".id")
+			->select([
+				TB_PREFIX.TB_DOCTORS.".*",
+				$this->qb->raw(TB_PREFIX.TB_SPECIALITIES.".id as speciality_id"),
+				$this->qb->raw(TB_PREFIX.TB_SPECIALITIES.".name as speciality_name"),
+				$this->qb->raw(TB_PREFIX.TB_SPECIALITIES.".description as speciality_description"),
+				$this->qb->raw(TB_PREFIX.TB_ROOMS.".id as room_id"),
+				$this->qb->raw(TB_PREFIX.TB_ROOMS.".name as room_name"),
+				$this->qb->raw(TB_PREFIX.TB_ROOMS.".location as room_location")
+
+			]);
+
+			return $query;
+		}
 
 
 		public function insert()

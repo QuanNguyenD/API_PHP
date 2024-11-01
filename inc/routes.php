@@ -23,9 +23,9 @@ $router->map('GET|POST','/login/?','LoginController#process');
 /**************************SIGNUP********************************/
 $router->map('POST','/signup/?','SignupController#process');
 
-
+/*************************DOCTOR*********************** */
 $router->map('GET','/doc','DoctorController#process');
-
+$router->map('GET','/doctor','DoctorsController#process');
 
 /*************************** DRUGS ************************** */
 // App::addRoute("GET|POST", "/drugs/?", "Drugs");
