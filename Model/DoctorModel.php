@@ -97,6 +97,25 @@ class DoctorModel extends DataEntry{
 			return $query;
 		}
 
+		public function getDocById($id){
+			$query = $this->qb->table(TB_PREFIX.TB_DOCTORS)
+			->where(TB_PREFIX.TB_DOCTORS.".id","=",$id)
+			->leftJoin(TB_PREFIX.TB_SPECIALITIES,TB_PREFIX.TB_SPECIALITIES.".id","=",TB_PREFIX.TB_DOCTORS.".speciality_id")
+			->leftJoin(TB_PREFIX.TB_ROOMS,TB_PREFIX.TB_ROOMS.".id","=",TB_PREFIX.TB_DOCTORS.".room_id")
+			->groupBy(TB_PREFIX.TB_DOCTORS.".id")
+			->select([
+				TB_PREFIX.TB_DOCTORS.".*",
+				$this->qb->raw(TB_PREFIX.TB_SPECIALITIES.".id as speciality_id"),
+				$this->qb->raw(TB_PREFIX.TB_SPECIALITIES.".name as speciality_name"),
+				$this->qb->raw(TB_PREFIX.TB_SPECIALITIES.".description as speciality_description"),
+				$this->qb->raw(TB_PREFIX.TB_ROOMS.".id as room_id"),
+				$this->qb->raw(TB_PREFIX.TB_ROOMS.".name as room_name"),
+				$this->qb->raw(TB_PREFIX.TB_ROOMS.".location as room_location")
+
+			]);
+			return $query->get();
+		}
+
 
 		public function insert()
 		{
@@ -173,6 +192,8 @@ class DoctorModel extends DataEntry{
 
 	    	return false;
 	    }
+
+
 
 
 

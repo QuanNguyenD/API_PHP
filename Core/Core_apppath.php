@@ -7,5 +7,7 @@ require_once APPPATH.'/Controller/SpecialityController.php';
 require_once APPPATH.'/Controller/SpecialitiesController.php';
 require_once APPPATH.'/Controller/SignupController.php';
 require_once APPPATH.'/Controller/DoctorsController.php';
+require_once APPPATH.'/Controller/PatientsController.php';
+require_once APPPATH.'/Controller/PatientController.php';
 
 ?>

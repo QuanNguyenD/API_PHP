@@ -90,8 +90,8 @@ class LoginController extends Controller{
         $Doctor = Controller::model("Doctor", $email);
         if( !$Doctor->isAvailable() ||
             $Doctor->get("active") != 1 
-            // || 
-            // !password_verify($password, $Doctor->get("password")) 
+            || 
+            !password_verify($password, $Doctor->get("password")) 
             )
         {
             $this->resp->msg = "The email or password you entered is incorrect !";

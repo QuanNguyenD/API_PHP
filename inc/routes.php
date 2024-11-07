@@ -24,8 +24,12 @@ $router->map('GET|POST','/login/?','LoginController#process');
 $router->map('POST','/signup/?','SignupController#process');
 
 /*************************DOCTOR*********************** */
-$router->map('GET','/doc','DoctorController#process');
+$router->map('GET','/doctor/[i:id]','DoctorController#process');
 $router->map('GET','/doctor','DoctorsController#process');
+
+/*************************PATIENT*************************** */
+$router->map('GET','/patient/[i:id]','PatientController#process');
+$router->map('GET','/patient','PatientsController#process');
 
 /*************************** DRUGS ************************** */
 // App::addRoute("GET|POST", "/drugs/?", "Drugs");

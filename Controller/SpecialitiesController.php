@@ -35,7 +35,7 @@
             $request_method = Input::method();
             if($request_method === 'POST'){
                 //Chỉnh lại thành Admin
-                if($decoded->role !="member"){
+                if($decoded->role !="admin"){
                     $this->resp->msg = "You are not admin & you can't do this action !";
                     $this->jsonecho();
                 }
@@ -51,7 +51,7 @@
 
 
         }
-        public function getAllSpeciality(){
+        private function getAllSpeciality(){
             $SpecialityModel = new SpecialityModel();
             $Speciality = $SpecialityModel->getAllSpeciality();
 

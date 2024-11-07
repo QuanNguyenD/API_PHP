@@ -97,6 +97,24 @@ Mô tả sơ lược đồ án:
     |Tên|Ý nghĩa|
     |---|----|
     |Content-Type|application/x-www-form-urlencoded|
+- Nếu đã tồn tại Email đã đăng ký sẽ hiện thông báo 
+
+
+<p align="center">
+    <img src="./photo/signupDoc.jpg">
+</p>
+
+- Đăng ký thành công 
+
+<p align="center">
+    <img src="./photo/DKThanhCongDOC.jpg">
+</p>
+
+
+
+
+
+
 
 
 
