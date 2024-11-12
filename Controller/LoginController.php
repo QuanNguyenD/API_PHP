@@ -1,6 +1,6 @@
 <?php
 
-
+require_once APPPATH.'/Core/Input.php';
 class LoginController extends Controller{
     public function process()
     {
@@ -19,8 +19,8 @@ class LoginController extends Controller{
 
         $this->resp->result = 0;
         // $type = Input::post("type");
-        // $password = Input::post("password");
-        
+        //$password = Input::post("password");
+        //echo($password);
         $input = file_get_contents('php://input');
         $data = json_decode($input, true);
         

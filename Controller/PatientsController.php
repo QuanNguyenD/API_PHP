@@ -59,7 +59,7 @@ use Firebase\JWT\Key;
             $search         = Input::get("search");
             $length         = Input::get("length") ? (int)Input::get("length") : 10;
             $start          = Input::get("start") ? (int)Input::get("start") : 0;
-
+            
             try{
                 $patientModel = new PatientModel();
                 $query = $patientModel->getAll();
