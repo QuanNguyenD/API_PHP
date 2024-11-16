@@ -31,6 +31,12 @@ $router->map('GET','/doctor','DoctorsController#process');
 $router->map('GET|POST|DELETE|PUT','/patient/[i:id]','PatientController#process');
 $router->map('GET','/patient','PatientsController#process');
 
+/**************************SERVICE***************** */
+
+$router->map('GET|POST|DELETE|PUT','/service/[i:id]','ServiceController#process');
+$router->map('GET|POST|DELETE|PUT','/service','ServicesController#process');
+/****************************DOCTORANDSERVICE******************** */
+$router->map('GET|POST|DELETE|PUT','/doctorsandservice/[i:id]','DoctorAndServiceController#process');
 /*************************** DRUGS ************************** */
 // App::addRoute("GET|POST", "/drugs/?", "Drugs");
 // App::addRoute("GET", "/drugs/[i:id]/?", "Drug");

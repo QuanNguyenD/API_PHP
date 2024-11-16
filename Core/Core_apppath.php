@@ -9,5 +9,7 @@ require_once APPPATH.'/Controller/SignupController.php';
 require_once APPPATH.'/Controller/DoctorsController.php';
 require_once APPPATH.'/Controller/PatientsController.php';
 require_once APPPATH.'/Controller/PatientController.php';
-
+require_once APPPATH.'/Controller/ServiceController.php';
+require_once APPPATH.'/Controller/ServicesController.php';
+require_once APPPATH.'/Controller/DoctorAndServiceController.php';
 ?>

@@ -53,7 +53,7 @@
                 }
             }
             elseif($request_method === 'PUT'){
-                if($decoded->role !="member"){
+                if($decoded->role !="admin"){
                     $this->resp->msg = "You are not admin & you can't do this action !";
                     $this->jsonecho();
                 }
