@@ -12,4 +12,5 @@ require_once APPPATH.'/Controller/PatientController.php';
 require_once APPPATH.'/Controller/ServiceController.php';
 require_once APPPATH.'/Controller/ServicesController.php';
 require_once APPPATH.'/Controller/DoctorAndServiceController.php';
+require_once APPPATH.'/Controller/PatientBookingController.php';
 ?>

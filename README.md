@@ -110,6 +110,24 @@ Mô tả sơ lược đồ án:
     <img src="./photo/DKThanhCongDOC.jpg">
 </p>
 
+## [**4. Read All Patient**](#read-all-patient)
+
+- **Mục đích :** Xem tất cả các bệnh nhân có trong database, chỉ có Admin là coi được.
+- **Method** : GET
+- **Header** :
+
+    |Tên|Ý nghĩa|
+    |---|----|
+    |Content-Type|application/x-www-form-urlencoded|
+    |Authorization|JWT của bác sĩ|
+
+<p align="center">
+    <img src="./photo/signupDoc.jpg">
+</p>
+
+
+
+
 
 
 
