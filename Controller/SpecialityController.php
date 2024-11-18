@@ -23,10 +23,7 @@
                 $decoded = JWT::decode($jwt, new Key(EC_SALT, 'HS256'));
                 // Lưu thông tin người dùng vào biến hoặc session
                 $_SESSION['AuthUser'] = $decoded; 
-                //$jsonDecoded = json_encode($decoded, JSON_PRETTY_PRINT);
-                //echo $jsonDecoded;
-                //$userRole = $decoded->role;
-                //echo($userRole);
+
                 
             } catch (Exception $e) {
                 // Xử lý lỗi nếu token không hợp lệ

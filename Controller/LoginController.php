@@ -18,14 +18,14 @@ class LoginController extends Controller{
     private function login(){
 
         $this->resp->result = 0;
-        // $type = Input::post("type");
-        //$password = Input::post("password");
+        $type = Input::post("type");
+        $password = Input::post("password");
         //echo($password);
-        $input = file_get_contents('php://input');
-        $data = json_decode($input, true);
+        // $input = file_get_contents('php://input');
+        // $data = json_decode($input, true);
         
-        $type = $data['type']?? null;
-        $password = $data['password'] ?? null;
+        // $type = $data['type']?? null;
+        // $password = $data['password'] ?? null;
         
         
         
@@ -38,7 +38,7 @@ class LoginController extends Controller{
 
         if( !$password )
         {
-            $this->resp->msg = "Password can not be empty !";
+            $this->resp->msg = "Password can not be emptyyy !";
             $this->jsonecho();
         }
         /**Case 1 : if type equals to "patient" => patient is logging */
@@ -70,14 +70,14 @@ class LoginController extends Controller{
     private function loginByDoctor(){
         /**Step 1 - declare */
         $this->resp->result = 0;
-        // $password = Input::post("password");
-        // $email = Input::post("email");
+        $password = Input::post("password");
+        $email = Input::post("email");
         
-        $input = file_get_contents('php://input');
-        $data = json_decode($input, true);
+        // $input = file_get_contents('php://input');
+        // $data = json_decode($input, true);
 
-        $email = $data['email'] ?? null;
-        $password = $data['password'] ?? null;
+        //$email = $data['email'] ?? null;
+        //$password = $data['password'] ?? null;
         
         /**Step 2 - is email empty ? */
         if( !$email )

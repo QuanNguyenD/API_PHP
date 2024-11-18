@@ -1,6 +1,10 @@
 <?php
 //bắt đầu hoặc tiếp tục một phiên làm việc (session) giữa máy khách (client) và máy chủ (server).
 session_start();
+
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 /*
 // Neu khong dung define
 $rootPath = dirname(__FILE__); // Lấy đường dẫn thư mục hiện tại
