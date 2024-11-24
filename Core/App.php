@@ -206,6 +206,87 @@ class App{
         //$this->controller->setVariable("Route", $route);
     }
 
+    private function auth()
+    {
+        $AuthUser = null;
+        $headers = apache_request_headers();
+        $Authorization = null;
+
+        /**Step 2 - what is type of logging request */
+        $keyword = "Doctor";//default
+        if(isset($headers['type']))
+        {
+            $keyword = $headers['type'] ? $headers['type'] : "Doctor";
+        }
+        if(isset($headers['Type']))
+        {
+            $keyword = $headers['Type']  ? $headers['Type'] : "Doctor";
+        }
+
+        /**Step 3 - Is authorization passed with HTTP request ? */
+        if(isset($headers['authorization']))
+        {
+            $Authorization = $headers['authorization'];
+        }
+        if(isset($headers['Authorization']))
+        {
+            $Authorization = $headers['Authorization'];
+        }
+        /**Step 4a - verify token */
+        if(isset($Authorization))
+        {
+            $matches = array();
+            preg_match('/JWT (.*)/', $Authorization, $matches);
+    
+            if(isset($matches[1])){
+                $accessToken = $matches[1];
+               
+                try {
+                    // $decoded = Firebase\JWT\JWT::decode($accessToken, EC_SALT, array('HS256'));
+                    $decoded = Firebase\JWT\JWT::decode($accessToken, new Firebase\JWT\Key(EC_SALT, 'HS256'));
+                    $AuthenticatedUser = Controller::Model($keyword, $decoded->id);
+                    if( $keyword == "Doctor" && $AuthenticatedUser->get("active") != 1 )
+                    {
+                        return null;
+                    }    
+
+                    if (isset($decoded->hashPass) && 
+                        $AuthenticatedUser->isAvailable() && 
+                        md5($AuthenticatedUser->get("password")) == $decoded->hashPass){
+                        $AuthUser = $AuthenticatedUser;
+                    }
+                } catch (\Exception $th) {
+                    return $AuthUser;
+                }
+            }
+        }
+
+        /**Step 4b - if authorization does not set */
+        if (Input::cookie("accessToken")) {
+            try {
+                //$decoded = Firebase\JWT\JWT::decode(Input::cookie("accessToken"), EC_SALT, array('HS256'));
+                $decoded = Firebase\JWT\JWT::decode(Input::cookie("accessToken"), new Firebase\JWT\Key(EC_SALT, 'HS256'));
+                $AuthenticatedUser = Controller::Model($keyword, $decoded->id);
+
+
+                if( $keyword == "Doctor" && $AuthenticatedUser->get("active") != 1 )
+                {
+                    return null;
+                }    
+
+                if (isset($decoded->hashPass) && 
+                    $AuthenticatedUser->isAvailable() && 
+                    md5($AuthenticatedUser->get("password")) == $decoded->hashPass){
+                    $AuthUser = $AuthenticatedUser;
+                }
+            } catch (\Exception $th) {
+                return $AuthUser;
+            }
+            
+        }
+        return $AuthUser;
+    }
+
     
 
 
@@ -216,7 +297,12 @@ class App{
     public function process(){
 
         $this -> db();
+
+        //$AuthUser = $this->auth();
         $this->route();
+        //$this->controller->setVariable("AuthUser", $AuthUser);
+
+        
 
         
         

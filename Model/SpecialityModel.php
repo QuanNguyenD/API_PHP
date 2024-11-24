@@ -142,6 +142,18 @@
         public function getAllSpeciality(){
             return $this->qb->table(TB_PREFIX.TB_SPECIALITIES)->get();
         }
+        public function getAllSpeciality1(){
+            $query = $this->qb->table(TB_PREFIX.TB_SPECIALITIES)
+            ->leftJoin(TB_PREFIX.TB_DOCTORS, 
+                    TB_PREFIX.TB_DOCTORS.".speciality_id","=", TB_PREFIX.TB_SPECIALITIES.".id")
+            ->groupBy(TB_PREFIX.TB_SPECIALITIES.".id")
+            ->select([
+                TB_PREFIX.TB_SPECIALITIES.".*",
+                $this->qb->raw("COUNT(".TB_PREFIX.TB_DOCTORS.".id) as doctor_quantity") 
+            ]);
+            return $query;
+        }
+
 
         //check duplicate 
         public function checkDuplicate($name){

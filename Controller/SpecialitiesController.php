@@ -14,6 +14,9 @@
             if (isset($headers['Authorization'])) {
                 $jwt =$headers['Authorization'];
             }
+            if (!$jwt && isset($_COOKIE['accessToken'])) {
+                $jwt = $_COOKIE['accessToken'];
+            }
 
             if ($jwt) {
                 try {
@@ -52,16 +55,90 @@
 
         }
         private function getAllSpeciality(){
-            $SpecialityModel = new SpecialityModel();
-            $Speciality = $SpecialityModel->getAllSpeciality();
 
-            if(!empty($Speciality)) {
-                // Nếu có, trả về dữ liệu dưới dạng JSON
-                echo json_encode($Speciality);
-            } else {
-                // Nếu không có dữ liệu, trả về thông báo lỗi
-                echo json_encode(["message" => "No speciality found."]);
+            $this->resp->result = 0;
+            $AuthUser = $this->getVariable("AuthUser");
+            $data = [];
+
+            $order          = Input::get("order");
+            $search         = Input::get("search");
+            $length         = Input::get("length") ? (int)Input::get("length") : 10;
+            $start          = Input::get("start") ? (int)Input::get("start") : 0;
+            try{
+
+            
+                $SpecialityModel = new SpecialityModel();
+                $query = $SpecialityModel->getAllSpeciality1();
+
+                $search_query = trim( (string)$search );
+                if($search_query){
+                    $query->where(function($q) use($search_query)
+                    {
+                        $q->where(TB_PREFIX.TB_SPECIALITIES.".name", 'LIKE', $search_query.'%')
+                        ->orWhere(TB_PREFIX.TB_SPECIALITIES.".description", 'LIKE', $search_query.'%');
+                    }); 
+                }
+                if( $order && isset($order["column"]) && isset($order["dir"]))
+                {
+                    $type = $order["dir"];
+                    $validType = ["asc","desc"];
+                    $sort =  in_array($type, $validType) ? $type : "desc";
+
+
+                    $column_name = trim($order["column"]) != "" ? trim($order["column"]) : "id";
+                    $column_name = str_replace(".", "_", $column_name);
+
+
+                    
+                    $query->orderBy($column_name, $sort);
+                    
+                }
+                else 
+                {
+                    $query->orderBy("id", "desc");
+                }
+                $res = $query->get();
+                $quantity = count($res);
+
+                /**Step 3.3 - length filter * start filter*/
+                $query->limit($length)
+                    ->offset($start);
+
+
+
+                /**Step 4 */
+                $result = $query->get();
+                foreach($result as $element)
+                {
+                    $data[] = array(
+                        "id" => (int)$element->id,
+                        "name" => $element->name,
+                        "description" => $element->description,
+                        "doctor_quantity" => (int)$element->doctor_quantity,
+                        "image" => $element->image
+                    );
+                }
+
+
+                /**Step 5 - return */
+                $this->resp->result = 1;
+                $this->resp->quantity = $quantity;
+                $this->resp->data = $data;
+
+            }catch(Exception $ex){
+                $this->resp->msg = $ex->getMessage();
             }
+            $this->jsonecho();
+
+            
+
+            // if(!empty($Speciality)) {
+            //     // Nếu có, trả về dữ liệu dưới dạng JSON
+            //     echo json_encode($Speciality);
+            // } else {
+            //     // Nếu không có dữ liệu, trả về thông báo lỗi
+            //     echo json_encode(["message" => "No speciality found."]);
+            // }
 
         }
 

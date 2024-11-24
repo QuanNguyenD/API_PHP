@@ -80,7 +80,6 @@ class BookingModel extends DataEntry{
 	    	$id = $this->qb->table(TB_PREFIX.TB_BOOKINGS)
 		    	->insert(array(
 		    		"id" => null,
-					"doctor_id" => $this->get("doctor_id"),
 		    		"patient_id" => $this->get("patient_id"),
 					"service_id" => $this->get("service_id"),
 					// "booking_name" => $this->get("booking_name"),
@@ -152,12 +151,29 @@ class BookingModel extends DataEntry{
                         ->where(TB_PREFIX.TB_BOOKINGS.".patient_id", "=", $id)
                         ->leftJoin(TB_PREFIX.TB_SERVICES, 
                                     TB_PREFIX.TB_SERVICES.".id","=", TB_PREFIX.TB_BOOKINGS.".service_id")
+                        ->leftJoin(TB_PREFIX.TB_PATIENTS,
+                                    TB_PREFIX.TB_PATIENTS.".id","=",TB_PREFIX.TB_BOOKINGS.".patient_id")
                         ->select([
                             TB_PREFIX.TB_BOOKINGS.".*",
                             $this->qb->raw(TB_PREFIX.TB_SERVICES.".id as service_id"),
                             $this->qb->raw(TB_PREFIX.TB_SERVICES.".name as service_name"),
                             $this->qb->raw(TB_PREFIX.TB_SERVICES.".image as service_image"),
+                            $this->qb->raw(TB_PREFIX.TB_PATIENTS.".name as patient_name"),
+                            $this->qb->raw(TB_PREFIX.TB_PATIENTS.".gender as patient_gender"),
+                            $this->qb->raw(TB_PREFIX.TB_PATIENTS.".birthday as patient_birthday"),
+                            $this->qb->raw(TB_PREFIX.TB_PATIENTS.".address as patient_address")
+
                         ]);
+            return $query;
+        }
+
+        public function addBooking($idPatient,$appointment_date,$idService){
+            $query = $this->qb->table(TB_PREFIX.TB_BOOKINGS)
+            ->where(TB_PREFIX.TB_BOOKINGS.".patient_id", "=", $idPatient)
+            ->where(TB_PREFIX.TB_BOOKINGS.".status", "=", "processing")
+            ->where(TB_PREFIX.TB_BOOKINGS.".appointment_date", "=", $appointment_date)
+            ->where(TB_PREFIX.TB_BOOKINGS.".service_id", "=", $idService);
+
             return $query;
         }
 

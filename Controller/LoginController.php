@@ -38,7 +38,7 @@ class LoginController extends Controller{
 
         if( !$password )
         {
-            $this->resp->msg = "Password can not be emptyyy !";
+            $this->resp->msg = "Password can not be empty !";
             $this->jsonecho();
         }
         /**Case 1 : if type equals to "patient" => patient is logging */
@@ -138,14 +138,14 @@ class LoginController extends Controller{
     {
         /**Step 1 - declare */
         $this->resp->result = 0;
-        //$password = Input::post("password");
-        //$phone = Input::post("phone");
+        $password = Input::post("password");
+        $phone = Input::post("phone");
 
-        $input = file_get_contents('php://input');
-        $data = json_decode($input, true);
+        // $input = file_get_contents('php://input');
+        // $data = json_decode($input, true);
 
-        $password = $data['password'] ?? null;
-        $phone = $data['phone'] ?? null;
+        // $password = $data['password'] ?? null;
+        // $phone = $data['phone'] ?? null;
         
         $hashPassword = "";
         $data = [];
