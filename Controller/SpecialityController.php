@@ -17,6 +17,9 @@
             if (isset($headers['Authorization'])) {
                 $jwt =$headers['Authorization'];
             }
+            if (!$jwt && isset($_COOKIE['accessToken'])) {
+                $jwt = $_COOKIE['accessToken'];
+            }
             
         if ($jwt) {
             try {
@@ -57,7 +60,7 @@
                 $this->update($id);
             }
             elseif($request_method ==='DELETE'){
-                if($decoded->role !="member"){
+                if($decoded->role !="admin"){
                     $this->resp->msg = "You are not admin & you can't do this action !";
                     $this->jsonecho();
                 }

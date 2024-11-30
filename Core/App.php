@@ -202,8 +202,8 @@ class App{
             echo json_encode(['error' => 'Route not found']);
         }
 
-        //$this->controller = new $controller;
-        //$this->controller->setVariable("Route", $route);
+        $this->controller = new $controller;
+        $this->controller->setVariable("Route", $route);
     }
 
     private function auth()

@@ -25,11 +25,11 @@ $router->map('POST','/signup/?','SignupController#process');
 
 /*************************DOCTOR*********************** */
 $router->map('GET','/doctor/[i:id]','DoctorController#process');
-$router->map('GET','/doctor','DoctorsController#process');
+$router->map('GET','/doctors','DoctorsController#process');
 
 /*************************PATIENT*************************** */
-$router->map('GET|POST|DELETE|PUT','/patient/[i:id]','PatientController#process');
-$router->map('GET','/patient','PatientsController#process');
+$router->map('GET|POST|DELETE|PUT','/patients/[i:id]','PatientController#process');
+$router->map('GET','/patients','PatientsController#process');
 
 /**************************SERVICE***************** */
 
@@ -52,4 +52,7 @@ $router->map('GET', '/drug/[i:id]', 'DrugController#process');
 $router->map('GET|PUT|DELETE|POST', '/speciality/[i:id]', 'SpecialityController#process');
 $router->map('GET|POST','/specialities','SpecialitiesController#process');
 
+/***************************BOOKING*********************************** */
+$router->map('GET|DELETE|PUT','/bookings/[i:id]','BookingController#process');
+$router->map('GET|DELETE|PUT|POST','/bookings','BookingsController#process');
 

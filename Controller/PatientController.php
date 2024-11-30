@@ -6,12 +6,17 @@ use Firebase\JWT\ExpiredException;
 use Firebase\JWT\Key;
 
     class PatientController extends Controller{
+        private $id;
         public function process($id = null){
+            $this->id = $id;
             $AuthUser = $this->getVariable("AuthUser");
             $jwt = null;
             $headers = getallheaders();
             if (isset($headers['Authorization'])) {
                 $jwt =$headers['Authorization'];
+            }
+            if (!$jwt && isset($_COOKIE['accessToken'])) {
+                $jwt = $_COOKIE['accessToken'];
             }
                 
             if ($jwt) {
@@ -19,10 +24,12 @@ use Firebase\JWT\Key;
                     $decoded = JWT::decode($jwt, new Key(EC_SALT, 'HS256'));
                     // Lưu thông tin người dùng vào biến hoặc session
                     $_SESSION['AuthUser'] = $decoded; 
+                    
                     //$jsonDecoded = json_encode($decoded, JSON_PRETTY_PRINT);
                     //echo $jsonDecoded;
-                    //$userRole = $decoded->role;
+                    $userRole = $decoded->id;
                     //echo($userRole);
+                    //self::$sharedVariable = $userRole;
                     
                 } catch (Exception $e) {
                     // Xử lý lỗi nếu token không hợp lệ
@@ -80,10 +87,20 @@ use Firebase\JWT\Key;
         }
 
         private function getById($id){
+            $id = $this->id;
+
             $this->resp->result = 0;
             $Patient = new PatientModel();
             $query  = $Patient->getById($id);
+            $Route = $this->getVariable("Route");
 
+            //$temp = self::$sharedVariable;
+            //echo($temp);
+            // if( !isset($Route->params->id) )
+            // {
+            //     $this->resp->msg = "ID is required !";
+            //     $this->jsonecho();
+            // }
             if( empty($query) )
             {
                 $this->resp->msg = "Patient is not available";
@@ -127,7 +144,8 @@ use Firebase\JWT\Key;
         }
 
         private function update($id){
-
+            $id = $this->id;
+ 
             $this->resp->result = 0;
             if(!isset($id)){
                 $this->resp->msg="ID is required";

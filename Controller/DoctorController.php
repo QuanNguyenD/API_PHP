@@ -36,7 +36,7 @@ class DoctorController extends Controller{
         }
 
         $request_method = Input::method();
-        
+
         if($request_method === 'GET')
         {
             if ($id !== null) {
@@ -45,7 +45,7 @@ class DoctorController extends Controller{
                 echo json_encode(["message" => "ID is required"]);
             }
         }
-        else if( $request_method === 'POST')
+        else if( $request_method === 'PUT')
         {
             
         }

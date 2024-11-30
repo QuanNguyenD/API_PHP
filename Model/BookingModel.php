@@ -177,6 +177,31 @@ class BookingModel extends DataEntry{
             return $query;
         }
 
+		public function getBookingByDoc($id){
+			$query = $this->qb->table(TB_PREFIX.TB_BOOKINGS)
+                        ->where(TB_PREFIX.TB_BOOKINGS.".id", "=", $id)
+                        ->leftJoin(TB_PREFIX.TB_SERVICES, 
+                                    TB_PREFIX.TB_SERVICES.".id","=", TB_PREFIX.TB_BOOKINGS.".service_id")
+                        ->select([
+                            TB_PREFIX.TB_BOOKINGS.".*",
+                            $this->qb->raw(TB_PREFIX.TB_SERVICES.".id as service_id"),
+                            $this->qb->raw(TB_PREFIX.TB_SERVICES.".name as service_name"),
+                        ]);
+			return $query;
+		}
+
+		public function getAllBookingForDoc(){
+			$query = $this->qb->table(TB_PREFIX.TB_BOOKINGS)
+                        ->leftJoin(TB_PREFIX.TB_SERVICES, 
+                                    TB_PREFIX.TB_SERVICES.".id","=", TB_PREFIX.TB_BOOKINGS.".service_id")
+                        ->select([
+                            TB_PREFIX.TB_BOOKINGS.".*",
+                            $this->qb->raw(TB_PREFIX.TB_SERVICES.".id as service_id"),
+                            $this->qb->raw(TB_PREFIX.TB_SERVICES.".name as service_name"),
+						]);
+			return $query;
+		}
+
 
 }
 
