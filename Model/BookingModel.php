@@ -194,10 +194,16 @@ class BookingModel extends DataEntry{
 			$query = $this->qb->table(TB_PREFIX.TB_BOOKINGS)
                         ->leftJoin(TB_PREFIX.TB_SERVICES, 
                                     TB_PREFIX.TB_SERVICES.".id","=", TB_PREFIX.TB_BOOKINGS.".service_id")
+						->leftJoin(TB_PREFIX.TB_PATIENTS,
+                                    TB_PREFIX.TB_PATIENTS.".id","=",TB_PREFIX.TB_BOOKINGS.".patient_id")
                         ->select([
                             TB_PREFIX.TB_BOOKINGS.".*",
                             $this->qb->raw(TB_PREFIX.TB_SERVICES.".id as service_id"),
                             $this->qb->raw(TB_PREFIX.TB_SERVICES.".name as service_name"),
+							$this->qb->raw(TB_PREFIX.TB_PATIENTS.".name as patient_name"),
+							$this->qb->raw(TB_PREFIX.TB_PATIENTS.".gender as patient_gender"),
+                            $this->qb->raw(TB_PREFIX.TB_PATIENTS.".birthday as patient_birthday"),
+                            $this->qb->raw(TB_PREFIX.TB_PATIENTS.".address as patient_address")
 						]);
 			return $query;
 		}

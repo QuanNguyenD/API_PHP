@@ -16,4 +16,7 @@ require_once APPPATH.'/Controller/PatientBookingController.php';
 require_once APPPATH.'/Controller/PatientBookingsController.php';
 require_once APPPATH.'/Controller/BookingController.php';
 require_once APPPATH.'/Controller/BookingsController.php';
+require_once APPPATH.'/Controller/RoomController.php';
+require_once APPPATH.'/Controller/RoomsController.php';
+require_once APPPATH.'/Controller/PatientProfileController.php';
 ?>

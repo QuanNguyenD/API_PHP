@@ -107,6 +107,28 @@
 
         }
 
+		public function getAllRoom(){
+			$query = $this->qb->table(TB_PREFIX.TB_ROOMS)
+                    ->leftJoin(TB_PREFIX.TB_DOCTORS, 
+                                TB_PREFIX.TB_DOCTORS.".room_id","=", TB_PREFIX.TB_ROOMS.".id")
+                    ->leftJoin(TB_PREFIX.TB_SPECIALITIES, 
+                                TB_PREFIX.TB_SPECIALITIES.".id","=", TB_PREFIX.TB_DOCTORS.".speciality_id")
+                    ->groupBy(TB_PREFIX.TB_ROOMS.".id")
+                    ->select([
+                        $this->qb->raw(TB_PREFIX.TB_ROOMS.".*"),
+                        $this->qb->raw("COUNT(".TB_PREFIX.TB_DOCTORS.".id) as doctor_quantity") 
+                    ]);
+
+			return $query;
+		}
+
+		public function saveRoom($name, $location){
+			$query = $this->qb->table(TB_PREFIX.TB_ROOMS)
+                ->where(TB_PREFIX.TB_ROOMS.".name", "=", $name)
+                ->where(TB_PREFIX.TB_ROOMS.".location", "=", $location);
+			return $query;
+		}
+
 
 
 

@@ -144,7 +144,7 @@ use Firebase\JWT\Key;
         }
 
         private function update($id){
-            $id = $this->id;
+            //$id = $this->id;
  
             $this->resp->result = 0;
             if(!isset($id)){

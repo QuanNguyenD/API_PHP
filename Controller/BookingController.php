@@ -66,7 +66,7 @@ use Firebase\JWT\Key;
 
         }
 
-        private function getById($id){
+    private function getById($id){
             $this->resp->result = 0;
 
         $Booking = Controller::model("Booking", $id);

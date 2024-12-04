@@ -11,6 +11,9 @@ use Firebase\JWT\Key;
                 if (isset($headers['Authorization'])) {
                     $jwt =$headers['Authorization'];
                 }
+                if (!$jwt && isset($_COOKIE['accessToken'])) {
+                    $jwt = $_COOKIE['accessToken'];
+                }
                 
             if ($jwt) {
                 try {

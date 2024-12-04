@@ -56,3 +56,13 @@ $router->map('GET|POST','/specialities','SpecialitiesController#process');
 $router->map('GET|DELETE|PUT','/bookings/[i:id]','BookingController#process');
 $router->map('GET|DELETE|PUT|POST','/bookings','BookingsController#process');
 
+
+/***************************ROOM*********************************** */
+$router->map('GET|DELETE|PUT','/rooms/[i:id]','RoomController#process');
+$router->map('GET|DELETE|PUT|POST','/rooms','RoomsController#process');
+
+/************************** PATIENT PROFILE ******************************/
+// this controller is used by patient to update personal information.
+$router->map("GET|POST", "/patient/profile", "PatientProfileController#process");
+
+
