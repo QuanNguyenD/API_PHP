@@ -199,7 +199,9 @@ class App{
             }
         } else {
             header("HTTP/1.0 404 Not Found");
-            echo json_encode(['error' => 'Route not found']);
+            echo json_encode(['error' => 'Route not found',
+                            'url' => $_SERVER['REQUEST_URI']]);
+            
         }
 
         $this->controller = new $controller;
