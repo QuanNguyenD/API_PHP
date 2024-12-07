@@ -65,4 +65,8 @@ $router->map('GET|DELETE|PUT|POST','/rooms','RoomsController#process');
 // this controller is used by patient to update personal information.
 $router->map("GET|POST", "/patient/profile", "PatientProfileController#process");
 
+/************************** APPOINTMENTS ******************************/
+App::addRoute("GET|POST", "/appointments/?", "AppointmentsController#process");
+App::addRoute("GET|PUT|PATCH|DELETE", "/appointments/[i:id]/?", "AppointmentController#process");
+
 
