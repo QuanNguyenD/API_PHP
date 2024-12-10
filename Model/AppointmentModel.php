@@ -172,6 +172,33 @@ class AppointmentModel extends DataEntry{
 
     }
 
+    public function appointmentsInLast7($from,$to){
+        $query = $this->qb->table(TB_PREFIX.TB_APPOINTMENTS)
+                        ->whereBetween(TB_PREFIX.TB_APPOINTMENTS.".date", 
+                                        $from->format("Y-m-d"), $to->format("Y-m-d"))
+                        ->orderBy(TB_PREFIX.TB_APPOINTMENTS.".date", "desc")
+                        ->groupBy(TB_PREFIX.TB_APPOINTMENTS.".date")
+                        ->select([
+                            $this->qb->raw("COUNT(*) as quantity"),
+                            TB_PREFIX.TB_APPOINTMENTS.".date"
+                        ]);
+        return $query;
+    }
+
+    public function quantityBookingInDate($date)
+    {
+        $query = $this->qb->table(TB_PREFIX.TB_APPOINTMENTS)
+                ->where(TB_PREFIX.TB_APPOINTMENTS.".date", "=", $date )
+                ->where(TB_PREFIX.TB_APPOINTMENTS.".appointment_time", "!=", "" )
+                ->select("*");
+
+        $result = $query->get();
+        $quantity = count($result);
+        return (int)$quantity;
+    }
+
+
+
 
 
 
