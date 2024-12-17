@@ -15,27 +15,31 @@ class ServiceController extends Controller{
             if (!$jwt && isset($_COOKIE['accessToken'])) {
                 $jwt = $_COOKIE['accessToken'];
             }
-            
-        if ($jwt) {
-            try {
-                $decoded = JWT::decode($jwt, new Key(EC_SALT, 'HS256'));
-                // Lưu thông tin người dùng vào biến hoặc session
-                $_SESSION['AuthUser'] = $decoded; 
-                //$jsonDecoded = json_encode($decoded, JSON_PRETTY_PRINT);
-                //echo $jsonDecoded;
-                //$userRole = $decoded->role;
-                //echo($userRole);
-                
-            } catch (Exception $e) {
-                // Xử lý lỗi nếu token không hợp lệ
-                echo json_encode(["message" => "Token is invalid or expired."]);
+            if(!isset($jwt)){
+                header("Location: " . APPURL . "/login");
                 exit;
             }
-        } else {
-            // Nếu không có token
-            header("Location: " . APPURL . "/login");
-            exit;
-        }
+            
+        // if ($jwt) {
+        //     try {
+        //         $decoded = JWT::decode($jwt, new Key(EC_SALT, 'HS256'));
+        //         // Lưu thông tin người dùng vào biến hoặc session
+        //         $_SESSION['AuthUser'] = $decoded; 
+        //         //$jsonDecoded = json_encode($decoded, JSON_PRETTY_PRINT);
+        //         //echo $jsonDecoded;
+        //         //$userRole = $decoded->role;
+        //         //echo($userRole);
+                
+        //     } catch (Exception $e) {
+        //         // Xử lý lỗi nếu token không hợp lệ
+        //         echo json_encode(["message" => "Token is invalid or expired."]);
+        //         exit;
+        //     }
+        // } else {
+        //     // Nếu không có token
+        //     header("Location: " . APPURL . "/login");
+        //     exit;
+        // }
 
         $request_method = Input::method();
         
@@ -48,6 +52,7 @@ class ServiceController extends Controller{
             }
         }
         elseif($request_method ==='PUT'){
+            $decoded = JWT::decode($jwt, new Key(EC_SALT, 'HS256'));
             if($decoded->role !="admin"){
                 $this->resp->msg = "You are not admin & you can't do this action !";
                 $this->jsonecho();
@@ -56,12 +61,14 @@ class ServiceController extends Controller{
         }
         else if( $request_method === 'POST')
         {
+            $decoded = JWT::decode($jwt, new Key(EC_SALT, 'HS256'));
             if($decoded->role !="admin"){
                 $this->resp->msg = "You are not admin & you can't do this action !";
                 $this->jsonecho();
             }
         }
         elseif($request_method ==='DELETE'){
+            $decoded = JWT::decode($jwt, new Key(EC_SALT, 'HS256'));
             if($decoded->role !="admin"){
                 $this->resp->msg = "You are not admin & you can't do this action !";
                 $this->jsonecho();

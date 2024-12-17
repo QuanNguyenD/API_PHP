@@ -8,34 +8,56 @@ class ServicesController extends Controller
 {
     public function process(){
         $jwt = null;
-            $headers = getallheaders();
+        $headers = apache_request_headers();
+            ////////////
+        // if(isset($headers['authorization']))
+        // {
+        //     $Authorization = $headers['authorization'];
+        // }
+        // if(isset($headers['Authorization']))
+        // {
+        //     $Authorization = $headers['Authorization'];
+        // }
+        // if(!$Authorization){
+        //     header("Location: " . APPURL . "/login");
+        //     exit;
+        // }
+
+
+        //     //////////
             if (isset($headers['Authorization'])) {
                 $jwt =$headers['Authorization'];
+            }
+            if (isset($headers['authorization'])) {
+                $jwt =$headers['authorization'];
             }
             if (!$jwt && isset($_COOKIE['accessToken'])) {
                 $jwt = $_COOKIE['accessToken'];
             }
-            
-        if ($jwt) {
-            try {
-                $decoded = JWT::decode($jwt, new Key(EC_SALT, 'HS256'));
-                // Lưu thông tin người dùng vào biến hoặc session
-                $_SESSION['AuthUser'] = $decoded; 
-                //$jsonDecoded = json_encode($decoded, JSON_PRETTY_PRINT);
-                //echo $jsonDecoded;
-                //$userRole = $decoded->role;
-                //echo($userRole);
-                
-            } catch (Exception $e) {
-                // Xử lý lỗi nếu token không hợp lệ
-                echo json_encode(["message" => "Token is invalid or expired."]);
+            if(!isset($jwt)){
+                header("Location: " . APPURL . "/login");
                 exit;
             }
-        } else {
-            // Nếu không có token
-            header("Location: " . APPURL . "/login");
-            exit;
-        }
+        // if (isset($jwt)) {
+        //     try {
+        //         $decoded = JWT::decode($jwt, new Key(EC_SALT, 'HS256'));
+        //         // Lưu thông tin người dùng vào biến hoặc session
+        //         // $_SESSION['AuthUser'] = $decoded; 
+        //         //$jsonDecoded = json_encode($decoded, JSON_PRETTY_PRINT);
+        //         //echo $jsonDecoded;
+        //         //$userRole = $decoded->role;
+        //         //echo($userRole);
+                
+        //     } catch (Exception $e) {
+        //         // Xử lý lỗi nếu token không hợp lệ
+        //         echo json_encode(["message" => "Token is invalid or expired."]);
+        //         exit;
+        //     }
+        // } else {
+        //     // Nếu không có token
+        //     header("Location: " . APPURL . "/login");
+        //     exit;
+        // }
 
         $request_method = Input::method();
         
@@ -44,14 +66,15 @@ class ServicesController extends Controller
             $this->getAll();
         }
         elseif($request_method ==='PUT'){
-            if($decoded->role !="admin"){
-                $this->resp->msg = "You are not admin & you can't do this action !";
-                $this->jsonecho();
-            }
+            // if($decoded->role !="admin"){
+            //     $this->resp->msg = "You are not admin & you can't do this action !";
+            //     $this->jsonecho();
+            // }
            
         }
         else if( $request_method === 'POST')
         {
+            $decoded = JWT::decode($jwt, new Key(EC_SALT, 'HS256'));
             if($decoded->role !="admin"){
                 $this->resp->msg = "You are not admin & you can't do this action !";
                 $this->jsonecho();
@@ -59,10 +82,10 @@ class ServicesController extends Controller
             $this->save();
         }
         elseif($request_method ==='DELETE'){
-            if($decoded->role !="admin"){
-                $this->resp->msg = "You are not admin & you can't do this action !";
-                $this->jsonecho();
-            }
+            // if($decoded->role !="admin"){
+            //     $this->resp->msg = "You are not admin & you can't do this action !";
+            //     $this->jsonecho();
+            // }
             
 
         }
@@ -102,7 +125,11 @@ class ServicesController extends Controller
                 $column_name = trim($order["column"]) != "" ? trim($order["column"]) : "id";
                 $column_name = str_replace(".", "_", $column_name);
                 
-                $query->orderBy($column_name, $sort);
+                if(in_array($column_name, ["name"])){
+                    $query->orderBy($column_name, $sort);
+                }else{
+                    $query->orderBy($column_name, $sort);
+                }
                 
             }
             else 

@@ -197,6 +197,52 @@ class AppointmentModel extends DataEntry{
         return (int)$quantity;
     }
 
+    public function appoinmentQueue(){
+        $query = $this->qb->table(TB_PREFIX.TB_APPOINTMENTS)
+        ->leftJoin(TB_PREFIX.TB_PATIENTS, 
+                                    TB_PREFIX.TB_PATIENTS.".id", "=", TB_PREFIX.TB_APPOINTMENTS.".patient_id")
+                        ->select([
+                            TB_PREFIX.TB_APPOINTMENTS.".*",
+        $this->qb->raw(TB_PREFIX.TB_PATIENTS.".name as patient_name"),
+                        ]);
+        return $query;
+    }
+    public function appoimentQueue2($date,$doctor_id){
+        $queryNormal = $this->qb->table(TB_PREFIX.TB_APPOINTMENTS)
+                        ->where(TB_PREFIX.TB_APPOINTMENTS.".date", "=", $date)
+                        ->where(TB_PREFIX.TB_APPOINTMENTS.".status", "=", "processing")
+                        ->where(TB_PREFIX.TB_APPOINTMENTS.".doctor_id", "=", $doctor_id)
+                        ->where(TB_PREFIX.TB_APPOINTMENTS.".appointment_time", "=", "")
+                        ->orderBy(TB_PREFIX.TB_APPOINTMENTS.".position", "asc")
+                        ->limit(2);
+        return $queryNormal;
+    }
+
+    public function appoimentQueue3($doctor_id, $date){
+        $query = $this->qb->table(TB_PREFIX.TB_APPOINTMENTS)
+        ->where(TB_PREFIX.TB_APPOINTMENTS.".status", "=", "processing")
+        ->where(TB_PREFIX.TB_APPOINTMENTS.".doctor_id", "=", $doctor_id)
+        ->where(TB_PREFIX.TB_APPOINTMENTS.".date", "=", $date);
+
+        return $query;
+    }
+
+    public function appoimentQueue4($doctor_id, $date){
+        $queryNormal = $this->qb->table(TB_PREFIX.TB_APPOINTMENTS)
+                        ->where(TB_PREFIX.TB_APPOINTMENTS.".date", "=", $date)
+                        ->where(TB_PREFIX.TB_APPOINTMENTS.".status", "=", "processing")
+                        ->where(TB_PREFIX.TB_APPOINTMENTS.".doctor_id", "=", $doctor_id)
+                        ->orderBy(TB_PREFIX.TB_APPOINTMENTS.".position", "asc")
+                        ->limit(3);
+        return $queryNormal;
+    }
+    
+
+
+
+    
+
+
 
 
 

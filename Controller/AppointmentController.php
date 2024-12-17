@@ -5,8 +5,10 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\Key;
 class AppointmentController extends Controller{
+    private $id;
     public function process($id = null)
     {
+        $this->id = $id;
         $jwt = null;
         $headers = getallheaders();
         if (isset($headers['Authorization'])) {
@@ -71,7 +73,20 @@ class AppointmentController extends Controller{
             }
         }
         elseif($request_method ==='DELETE'){
+            if ($id !== null) {
+                $this->delete($id); // Truyền $id vào phương thức
+            } else {
+                echo json_encode(["message" => "ID is required"]);
+            }
             
+        }
+        elseif($request_method ==='PATCH'){
+            
+            if ($id !== null) {
+                $this->confirm($id); // Truyền $id vào phương thức
+            } else {
+                echo json_encode(["message" => "ID is required"]);
+            }
         }
 
     }
@@ -138,6 +153,7 @@ class AppointmentController extends Controller{
     }
     private function update($id)
     {
+        $id = $this->id;
         $jwt = null;
         $headers = getallheaders();
         if (isset($headers['Authorization'])) {
@@ -175,8 +191,8 @@ class AppointmentController extends Controller{
         $difference = abs(strtotime($today) - strtotime($appointment_date));
         $differenceYear = floor($difference / (365*60*60*24));
         $differenceMonth = floor(($difference - $differenceYear * 365*60*60*24) / (30*60*60*24));
-        $differenceDay = floor(($difference - $differenceYear * 365*60*60*24 - $differenceMonth*30*60*60*24)/ (60*60*24));
-
+        //$differenceDay = floor(($difference - $differenceYear * 365*60*60*24 - $differenceMonth*30*60*60*24)/ (60*60*24));
+        $differenceDay = (strtotime($today) - strtotime($appointment_date)) / (60*60*24);
         if( $differenceDay > 0 )
         {
             $this->resp->msg = "Today is ".$today." but this appointment's is ".$appointment_date." so that you can not do this action";
@@ -306,6 +322,149 @@ class AppointmentController extends Controller{
 
 
 
+
+    }
+    private function confirm($id){
+        $this->resp->result = 0;
+        $jwt = null;
+        $headers = getallheaders();
+        if (isset($headers['Authorization'])) {
+            $jwt =$headers['Authorization'];
+        }
+        if (!$jwt && isset($_COOKIE['accessToken'])) {
+            $jwt = $_COOKIE['accessToken'];
+        }
+        $AuthUser = JWT::decode($jwt, new Key(EC_SALT, 'HS256'));
+        $today = Date("Y-m-d");
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $create_at = date("Y-m-d H:i:s");
+        $update_at = date("Y-m-d H:i:s");
+
+        $Appointment = Controller::model("Appointment", $id);
+        if( !$Appointment->isAvailable() )
+        {
+            $this->resp->msg = "Appointment is not available";
+            $this->jsonecho();
+        }
+        $invalid_status = ["cancelled", "done"];
+        $status_validation = in_array($Appointment->get("status"), $invalid_status);
+        if( $status_validation )
+        {
+            $this->resp->msg = "Appointment's status is ".$Appointment->get("status")." ! You can't do this action !";
+            $this->jsonecho();
+        }
+
+        $appointment_date = $Appointment->get("date");
+            
+        $difference = abs(strtotime($today) - strtotime($appointment_date));
+        $differenceYear = floor($difference / (365*60*60*24));
+        $differenceMonth = floor(($difference - $differenceYear * 365*60*60*24) / (30*60*60*24));
+        //$differenceDay = floor(($difference - $differenceYear * 365*60*60*24 - $differenceMonth*30*60*60*24)/ (60*60*24));
+        $differenceDay = (strtotime($today) - strtotime($appointment_date)) / (60*60*24);
+
+        if( $differenceDay > 0 )
+        {
+            $this->resp->msg = "Today is ".$today." but this appointment's is ".$appointment_date." so that you can not do this action";
+            $this->jsonecho();
+        }
+
+        if( !Input::patch("status") )
+        {
+            $this->resp->msg = "Missing new status";
+            $this->jsonecho();
+        }
+
+        $new_status = Input::patch("status");
+        $valid_status = ["cancelled", "done"];
+        $status_validation = in_array($new_status, $valid_status);
+        if( !$status_validation )
+        {
+            $this->resp->msg = "The new status of appointment is not valid. These accepted status are: ".implode(', ', $valid_status);
+            $this->jsonecho();
+        }
+
+        if( $AuthUser->role == "member" &&  $Appointment->get("doctor_id") != $AuthUser->id )
+        {
+            $AnotherDoctor = Controller::model("Doctor", $Appointment->get("doctor_id") );
+
+            $this->resp->msg = "This appointment belongs to doctor ".$AnotherDoctor->get("name")."! Therefore, you can't do this action ";
+            $this->jsonecho();
+        }
+
+        $AnotherDoctor = Controller::model("Doctor", $Appointment->get("doctor_id") );
+        $AnotherDoctorName = $AnotherDoctor->get("name");
+        $message = "";
+        if( $new_status == "done")
+        {
+            
+            $message = "Chúc mừng bạn! Lượt khám của bạn với bác sĩ ".$AnotherDoctorName." đã hoàn thành. Bạn có thể xem lại kết luận của bác sĩ trong phần lịch sử khám bệnh";
+        }
+        else if( $new_status == "cancelled")
+        {
+            $message = "Lượt khám của bạn đã bị hủy do bạn không có mặt đúng thời gian!";
+        }
+        try 
+        {
+            $Appointment->set("status", $new_status)
+                        ->set("update_at", $update_at)
+                        ->save();
+
+            $Notification = Controller::model("Notification");
+            $Notification->set("message", $message)
+                        ->set("record_id", $Appointment->get("id") )
+                        ->set("record_type", "appointment")
+                        ->set("is_read", 0)
+                        ->set("patient_id", $Appointment->get("patient_id"))
+                        ->set("create_at", $create_at)
+                        ->set("update_at", $update_at)
+                        ->save();
+            
+
+            $this->resp->result = 1;
+            $this->resp->msg = "The status of appointment has been updated successfully !";
+            } 
+            catch (\Exception $ex) 
+            {
+                $this->resp->msg = $ex->getMessage();
+            }
+            $this->jsonecho();
+
+
+
+
+    }
+
+    private function delete($id){
+        $this->resp->result = 0;
+        $valid_status = ["admin", "supporter"];
+
+        $Appointment = Controller::model("Appointment", $id);
+        if( !$Appointment->isAvailable() )
+        {
+            $this->resp->msg = "Appointment is not available";
+            $this->jsonecho();
+        }
+        if($Appointment->get("status") == "done")
+        {
+            $this->resp->msg = "Appointment's status is ".$Appointment->get("status")." now. You can not delete!";
+            $this->jsonecho();
+        }
+
+
+
+        /**Step 4 - how many doctor are there in this Clinic */
+        try 
+        {
+            $Appointment->delete();
+            
+            $this->resp->result = 1;
+            $this->resp->msg = "Appointment is deleted successfully !";
+        } 
+        catch (\Exception $ex) 
+        {
+            $this->resp->msg = $ex->getMessage();
+        }
+        $this->jsonecho();
 
     }
 

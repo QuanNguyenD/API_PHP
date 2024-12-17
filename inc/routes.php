@@ -24,7 +24,7 @@ $router->map('GET|POST','/login/?','LoginController#process');
 $router->map('POST','/signup/?','SignupController#process');
 
 /*************************DOCTOR*********************** */
-$router->map('GET','/doctor/[i:id]','DoctorController#process');
+$router->map('GET','/doctors/[i:id]','DoctorController#process');
 $router->map('GET','/doctors','DoctorsController#process');
 
 /*************************PATIENT*************************** */
@@ -33,7 +33,7 @@ $router->map('GET','/patients','PatientsController#process');
 
 /**************************SERVICE***************** */
 
-$router->map('GET|POST|DELETE|PUT','/service/[i:id]','ServiceController#process');
+$router->map('GET|POST|DELETE|PUT','/services/[i:id]','ServiceController#process');
 $router->map('GET|POST|DELETE|PUT','/services','ServicesController#process');
 /****************************DOCTORANDSERVICE******************** */
 $router->map('GET|POST|DELETE|PUT','/doctorsandservice/[i:id]','DoctorAndServiceController#process');
@@ -49,7 +49,7 @@ $router->map('GET', '/drugs', 'DrugsController#process');
 $router->map('GET', '/drug/[i:id]', 'DrugController#process');
 
 /************************** SPECIALITY ******************************/
-$router->map('GET|PUT|DELETE|POST', '/speciality/[i:id]', 'SpecialityController#process');
+$router->map('GET|PUT|DELETE|POST', '/specialities/[i:id]', 'SpecialityController#process');
 $router->map('GET|POST','/specialities','SpecialitiesController#process');
 
 /***************************BOOKING*********************************** */
@@ -66,7 +66,12 @@ $router->map('GET|DELETE|PUT|POST','/rooms','RoomsController#process');
 $router->map("GET|POST", "/patient/profile", "PatientProfileController#process");
 
 /************************** APPOINTMENTS ******************************/
-App::addRoute("GET|POST", "/appointments/?", "AppointmentsController#process");
-App::addRoute("GET|PUT|PATCH|DELETE", "/appointments/[i:id]/?", "AppointmentController#process");
+$router->map("GET|POST", "/appointments/?", "AppointmentsController#process");
+$router->map("GET|PUT|PATCH|DELETE", "/appointments/[i:id]/?", "AppointmentController#process");
+$router->map("GET|POST", "/appointment-queue/?", "AppointmentQueueController#process");
+$router->map("GET|POST", "/appointment-queue-now/?", "AppointmentQueueNowController#process");
+App::addRoute("GET|POST", "/appointment-records/?", "AppointmentRecordsController#process");
+App::addRoute("GET|PUT|PATCH|DELETE", "/appointment-records/[i:id]/?", "AppointmentRecordController#process");
 
-
+/************************** CHART ******************************/
+$router->map("GET", "/charts/?", "ChartsController#process");

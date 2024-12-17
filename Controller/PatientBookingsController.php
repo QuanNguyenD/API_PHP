@@ -14,27 +14,31 @@ use Firebase\JWT\Key;
                 if (!$jwt && isset($_COOKIE['accessToken'])) {
                     $jwt = $_COOKIE['accessToken'];
                 }
-                
-            if ($jwt) {
-                try {
-                    $decoded = JWT::decode($jwt, new Key(EC_SALT, 'HS256'));
-                    // Lưu thông tin người dùng vào biến hoặc session
-                    $_SESSION['AuthUser'] = $decoded; 
-                    //$jsonDecoded = json_encode($decoded, JSON_PRETTY_PRINT);
-                    //echo $jsonDecoded;
-                    //$userRole = $decoded->role;
-                    //echo($userRole);
-                    
-                } catch (Exception $e) {
-                    // Xử lý lỗi nếu token không hợp lệ
-                    echo json_encode(["message" => "Token is invalid or expired."]);
+                if(!isset($jwt)){
+                    header("Location: " . APPURL . "/login");
                     exit;
                 }
-            } else {
-                // Nếu không có token
-                header("Location: " . APPURL . "/login");
-                exit;
-            }
+                
+            // if ($jwt) {
+            //     try {
+            //         $decoded = JWT::decode($jwt, new Key(EC_SALT, 'HS256'));
+            //         // Lưu thông tin người dùng vào biến hoặc session
+            //         $_SESSION['AuthUser'] = $decoded; 
+            //         //$jsonDecoded = json_encode($decoded, JSON_PRETTY_PRINT);
+            //         //echo $jsonDecoded;
+            //         //$userRole = $decoded->role;
+            //         //echo($userRole);
+                    
+            //     } catch (Exception $e) {
+            //         // Xử lý lỗi nếu token không hợp lệ
+            //         echo json_encode(["message" => "Token is invalid or expired."]);
+            //         exit;
+            //     }
+            // } else {
+            //     // Nếu không có token
+            //     header("Location: " . APPURL . "/login");
+            //     exit;
+            // }
             if( empty($decoded->role)== false )
             {
                 $this->resp->result = 0;
@@ -146,11 +150,24 @@ use Firebase\JWT\Key;
         private function save(){
             $this->resp->result = 0;
             $AuthUser = $this->getVariable("AuthUser");
+            $headers = apache_request_headers();
+            //$jwt ='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTMsImVtYWlsIjoiIiwicGhvbmUiOiIwMTIzNDU2NzkxIiwibmFtZSI6IjAxMjM0NTY3OTEiLCJnZW5kZXIiOjAsImJpcnRoZGF5IjoiIiwiYWRkcmVzcyI6IiIsImF2YXRhciI6IiIsImNyZWF0ZV9hdCI6IjIwMjQtMTEtMjMgMDM6MDg6MDciLCJ1cGRhdGVfYXQiOiIyMDI0LTExLTIzIDAzOjA4OjA3IiwiaGFzaFBhc3MiOiI1NGZhMzgwYzNmOWY5ZTQ0MGVkNTcyZmVkOTUwYTk2OCIsImlhdCI6MTczMjMzMTI4N30.PRhI51Pl5uZvQPkbpfunQuHAv8vDKj5tjp_mWPCq3F4';
+            $Authorization = null;
             $headers = getallheaders();
-            $jwt =$headers['Authorization'];
+            if (isset($headers['Authorization'])) {
+                $Authorization =$headers['Authorization'];
+            }
+            if (isset($headers['authorization'])) {
+                $Authorization =$headers['authorization'];
+            }
+            $matches = array();
+            preg_match('/JWT (.*)/', $Authorization, $matches);
+            $jwt = $matches[1];
+                
             $decoded = JWT::decode($jwt, new Key(EC_SALT, 'HS256'));
-
+            // echo($jwt);
             $data = [];
+            //echo($decoded->id);
 
             /**Step 2 - get required data */
             $required_fields = [ "appointment_time", "appointment_date"];
@@ -172,7 +189,7 @@ use Firebase\JWT\Key;
             $address = $decoded->address;
 
 
-            $appointment_time = Input::post("appointment_hour");
+            $appointment_time = Input::post("appointment_time");
             $appointment_date = Input::post("appointment_date");
             $status = "processing";
 
@@ -269,14 +286,13 @@ use Firebase\JWT\Key;
                 $this->resp->msg = "Congratulation, ".$name."! This booking at "
                                     .$Booking->get("appointment_time")
                                     ." which has been created successfully by you. ";
-                echo($patient_id);
                 $this->resp->data = array(
                     "id" => (int)$Booking->get("id"),
                     // "doctor_id" => (int)$Booking->get("doctor_id"),
                     // "booking_name" => $Booking->get("booking_name"),
                     // "booking_phone" => $Booking->get("booking_phone"),
                     "name" =>$Patient->get("name"),
-                    "gender"=>$Patient->get("gender"),
+                    "gender"=>(int)$Patient->get("gender"),
                     "birthday"=>$Patient->get("birthday"),
                     // "name" => $Booking->get("name"),
                     // "gender" => (int)$Booking->get("gender"),

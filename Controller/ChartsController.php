@@ -50,7 +50,7 @@ class ChartsController extends Controller{
                         $this->appointmentsInLast7Days();
                         break;
                     case "appointmentandbookinginlast7days":
-                        //$this->appointmentsAndBookingInLast7days();
+                        $this->appointmentsAndBookingInLast7days();
                         break;
                     default:
                         $this->resp->result = 0;

@@ -6,42 +6,26 @@ use Firebase\JWT\ExpiredException;
 use Firebase\JWT\Key;
     class DoctorsController extends Controller{
         public function process(){
+            $headers = apache_request_headers();
             $AuthUser = $this->getVariable("AuthUser");
             $jwt = null;
             $headers = getallheaders();
             if (isset($headers['Authorization'])) {
                 $jwt =$headers['Authorization'];
             }
+            if (isset($headers['authorization'])) {
+                $jwt =$headers['authorization'];
+            }
             if (!$jwt && isset($_COOKIE['accessToken'])) {
                 $jwt = $_COOKIE['accessToken'];
             }
             
-        if ($jwt) {
-            try {
-                $decoded = JWT::decode($jwt, new Key(EC_SALT, 'HS256'));
-                // Lưu thông tin người dùng vào biến hoặc session
-                $_SESSION['AuthUser'] = $decoded; 
-                //$jsonDecoded = json_encode($decoded, JSON_PRETTY_PRINT);
-                //echo $jsonDecoded;
-                //$userRole = $decoded->role;
-                //echo($userRole);
-                
-            } catch (Exception $e) {
-                // Xử lý lỗi nếu token không hợp lệ
-                echo json_encode(["message" => "Token is invalid or expired."]);
-                exit;
-            }
-        } else {
-            // Nếu không có token
-            header("Location: " . APPURL . "/login");
-            exit;
-        }
-
-            // if (!$AuthUser)
-            // {
-            //     header("Location: ".APPURL."/login");
+            // if(!isset($jwt)){
+            //     header("Location: " . APPURL . "/login");
             //     exit;
             // }
+
+            
             
             $request_method = Input::method();
             if($request_method === 'GET')

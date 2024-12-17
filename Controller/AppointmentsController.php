@@ -58,7 +58,7 @@ class AppointmentsController extends Controller{
                 $this->resp->msg= "you are not admin you can not do this action";
                 $this->jsonecho();
             }
-            //$this->save();
+            //$this->newFlow();
         }
         
         
@@ -241,6 +241,8 @@ class AppointmentsController extends Controller{
             $this->resp->msg = $ex->getMessage();
         }
         $this->jsonecho();
+
+        
 
 
 

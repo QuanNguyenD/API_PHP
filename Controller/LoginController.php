@@ -1,16 +1,38 @@
 <?php
-
+use Firebase\JWT\JWT;
+use Firebase\JWT\ExpiredException;
+use Firebase\JWT\Key;
 require_once APPPATH.'/Core/Input.php';
 class LoginController extends Controller{
     public function process()
     {
-        $AuthUser = $this->getVariable("AuthUser");
-        if ($AuthUser) {
+        
+        $jwt = null;
+        $headers = getallheaders();
+        if (isset($headers['Authorization'])) {
+            $jwt =$headers['Authorization'];
+        }
+        if (!$jwt && isset($_COOKIE['accessToken'])) {
+            $jwt = $_COOKIE['accessToken'];
+        }
+        
+            
+        if ($jwt) {
             $this->resp->result = 1;
             $this->resp->msg = "You already logged in";
             $this->jsonecho();
-        }
+        } else {
             $this -> login();
+        }
+
+
+        // $AuthUser = $this->getVariable("AuthUser");
+        // if ($AuthUser) {
+        //     $this->resp->result = 1;
+        //     $this->resp->msg = "You already logged in";
+        //     $this->jsonecho();
+        // }
+        //     $this -> login();
             
         
     }
@@ -38,7 +60,7 @@ class LoginController extends Controller{
 
         if( !$password )
         {
-            $this->resp->msg = "Password can not be empty !";
+            $this->resp->msg = "Password can not be emptyy !";
             $this->jsonecho();
         }
         /**Case 1 : if type equals to "patient" => patient is logging */
