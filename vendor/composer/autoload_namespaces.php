@@ -6,7 +6,6 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'claviska' => array($vendorDir . '/claviska/simpleimage/src'),
     'Viocon' => array($vendorDir . '/usmanhalalit/viocon/src'),
     'Pixie' => array($vendorDir . '/usmanhalalit/pixie/src'),
     'PayPal' => array($vendorDir . '/paypal/rest-api-sdk-php/lib'),

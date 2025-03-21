@@ -160,12 +160,18 @@ use Firebase\JWT\Key;
             if (isset($headers['authorization'])) {
                 $Authorization =$headers['authorization'];
             }
+            //echo($Authorization);
             $matches = array();
             preg_match('/JWT (.*)/', $Authorization, $matches);
-            $jwt = $matches[1];
-                
-            $decoded = JWT::decode($jwt, new Key(EC_SALT, 'HS256'));
-            // echo($jwt);
+            //Atention
+            //$jwt = $matches[1];
+            
+            //$decoded = JWT::decode($jwt, new Key(EC_SALT, 'HS256'));
+
+            $decoded = JWT::decode($Authorization, new Key(EC_SALT, 'HS256'));
+
+
+            //echo($jwt);
             $data = [];
             //echo($decoded->id);
 

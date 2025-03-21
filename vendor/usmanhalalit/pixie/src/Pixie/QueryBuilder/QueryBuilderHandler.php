@@ -6,6 +6,8 @@ use Pixie\Exception;
 
 class QueryBuilderHandler
 {
+    private $adapter;
+    private $adapterConfig;
 
     /**
      * @var \Viocon\Container

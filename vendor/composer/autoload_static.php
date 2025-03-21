@@ -256,18 +256,7 @@ class ComposerStaticInitba66cde448ae49b2ff8371c75acf22f5
         ),
     );
 
-    public static $fallbackDirsPsr4 = array (
-        0 => __DIR__ . '/..' . '/league/color-extractor/src',
-    );
-
     public static $prefixesPsr0 = array (
-        'c' => 
-        array (
-            'claviska' => 
-            array (
-                0 => __DIR__ . '/..' . '/claviska/simpleimage/src',
-            ),
-        ),
         'V' => 
         array (
             'Viocon' => 
@@ -385,7 +374,6 @@ class ComposerStaticInitba66cde448ae49b2ff8371c75acf22f5
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitba66cde448ae49b2ff8371c75acf22f5::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitba66cde448ae49b2ff8371c75acf22f5::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInitba66cde448ae49b2ff8371c75acf22f5::$fallbackDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInitba66cde448ae49b2ff8371c75acf22f5::$prefixesPsr0;
             $loader->classMap = ComposerStaticInitba66cde448ae49b2ff8371c75acf22f5::$classMap;
 

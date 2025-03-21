@@ -30,5 +30,4 @@ return array(
     'Defuse\\Crypto\\' => array($vendorDir . '/defuse/php-encryption/src'),
     'Assert\\' => array($vendorDir . '/beberlei/assert/lib/Assert'),
     'Alchemy\\BinaryDriver\\' => array($vendorDir . '/php-ffmpeg/php-ffmpeg/src/Alchemy/BinaryDriver'),
-    '' => array($vendorDir . '/league/color-extractor/src'),
 );
