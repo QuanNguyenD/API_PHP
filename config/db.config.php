@@ -10,7 +10,7 @@ define("USER_NAME","root");
 //table config 
 
 define("TB_PREFIX","tn_");
-// define("TABLE_APPOINTMENTS","appoitnments");
+//define("TABLE_APPOINTMENTS","appoitnments");
 define("TB_DRUGS","drugs");
 define("TB_DOCTORS","doctors");
 define("TB_SPECIALITIES", "specialities");

@@ -426,53 +426,7 @@ function save_option($option_name, $option_value)
 
 
 
-/**
- * Get/Set option values [code, shortcode, name, localname] for the ACTIVE_LANG
- * @param  string $option Name of the option
- * @param  string|null $value  value of the option to set. If null don't update the value
- * @return string|null         Value of the option or null (if not found)
- */
-function active_lang($option, $value = null)
-{
-    $options = ["code", "shortcode", "name", "localname"];
 
-    if (!in_array($option, $options)) {
-        // Invalid option name
-        return null;
-    }
-
-    if (!defined('ACTIVE_LANG')) {
-        // Active lang is not defined,
-        // It's too early to call this function yet
-        return null;       
-    }
-
-    if (is_null($value)) {
-        if (Config::get("active_lang_".$option)) {
-            // Found the required value
-            return Config::get("active_lang_".$option);
-        }   
-
-        // Search for the value of the option
-        foreach (Config::get("applangs") as $al) {
-            if ($al["code"] == ACTIVE_LANG) {
-                // found, break loop
-                foreach ($al as $key => $value) {
-                    Config::set("active_lang_".$key, $value);
-                }
-                break;
-            }
-        }
-
-        // Return the option value.
-        // If the option is not found in the foreach loop above
-        // then NULL value will be returned automatically. See Config::get()
-        return Config::get("active_lang_".$option);
-    } else {
-        Config::set("active_lang_".$option, $value);
-        return Config::get("active_lang_".$option);
-    }
-}
 
 /**
  * Check json is invalid

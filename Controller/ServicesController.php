@@ -34,10 +34,10 @@ class ServicesController extends Controller
             if (!$jwt && isset($_COOKIE['accessToken'])) {
                 $jwt = $_COOKIE['accessToken'];
             }
-            if(!isset($jwt)){
-                header("Location: " . APPURL . "/login");
-                exit;
-            }
+            // if(!isset($jwt)){
+            //     header("Location: " . APPURL . "/login");
+            //     exit;
+            // }
         // if (isset($jwt)) {
         //     try {
         //         $decoded = JWT::decode($jwt, new Key(EC_SALT, 'HS256'));

@@ -53,7 +53,7 @@ use Firebase\JWT\Key;
                 }
             }
             
-            elseif($request_method ==='DELETE'){
+            else if($request_method ==='DELETE'){
                 if ($id !== null) {
                     //$this->delete($id);
                 } else {
@@ -65,6 +65,13 @@ use Firebase\JWT\Key;
             {
                 $this->update($id);
             }
+
+            else if($request_method ==='PATCH'){
+                $this->confirm($id);
+            }
+
+
+            
             
 
 
@@ -80,15 +87,15 @@ use Firebase\JWT\Key;
             $this->jsonecho();
         }
         $headers = getallheaders();
-        $jwt =$headers['Authorization'];
-        $decoded = JWT::decode($jwt, new Key(EC_SALT, 'HS256'));
-        $idPatient= $decoded->id;
+        // $jwt =$headers['Authorization'];
+        // $decoded = JWT::decode($jwt, new Key(EC_SALT, 'HS256'));
+        // $idPatient= $decoded->id;
         
-        if( $Booking->get("patient_id") != $idPatient )
-        {
-            $this->resp->msg = "This booking is not available";
-            $this->jsonecho();
-        }
+        // if( $Booking->get("patient_id") != $idPatient )
+        // {
+        //     $this->resp->msg = "This booking is not available";
+        //     $this->jsonecho();
+        // }
 
 
         $Service = Controller::model("Service", $Booking->get("service_id"));
@@ -307,6 +314,23 @@ use Firebase\JWT\Key;
 
 
 
+        }
+
+        private function confirm($id){
+                echo("123");
+                $id = $this->id;
+            $jwt = null;
+            $headers = getallheaders();
+            if (isset($headers['Authorization'])) {
+                $jwt =$headers['Authorization'];
+            }
+            if (!$jwt && isset($_COOKIE['accessToken'])) {
+                $jwt = $_COOKIE['accessToken'];
+            }
+            $AuthUser = JWT::decode($jwt, new Key(EC_SALT, 'HS256'));
+            $this->resp->result = 0;
+            $Booking = Controller::model("Booking", $id);
+            $Patient = Controller::model("Patient", $Booking->get("patient_id"));
         }
 
 

@@ -1,7 +1,7 @@
 <?php
 require_once APPPATH.'/Controller/DrugController.php';
 require_once APPPATH.'/Controller/LoginController.php';
-require_once APPPATH.'/Controller/DrugsController.php';
+//require_once APPPATH.'/Controller/DrugsController.php';
 require_once APPPATH.'/Controller/DoctorController.php';
 require_once APPPATH.'/Controller/SpecialityController.php';
 require_once APPPATH.'/Controller/SpecialitiesController.php';
@@ -19,8 +19,6 @@ require_once APPPATH.'/Controller/BookingsController.php';
 require_once APPPATH.'/Controller/RoomController.php';
 require_once APPPATH.'/Controller/RoomsController.php';
 require_once APPPATH.'/Controller/PatientProfileController.php';
-require_once APPPATH.'/Controller/AppointmentController.php';
-require_once APPPATH.'/Controller/AppointmentsController.php';
-require_once APPPATH.'/Controller/AppointmentQueueController.php';
-require_once APPPATH.'/Controller/AppointmentRecordController.php';
+
+
 ?>

@@ -40,8 +40,8 @@ $router->map('GET|POST|DELETE|PUT','/doctorsandservice/[i:id]','DoctorAndService
 
 
 /***************************PATIENTBOOKING*********************************** */
-$router->map('GET|DELETE|PUT','/patient/booking/[i:id]','PatientBookingController#process');
-$router->map('GET|DELETE|PUT|POST','/patient/booking','PatientBookingsController#process');
+$router->map('GET|DELETE|PUT|PATCH','/patient/booking/[i:id]','PatientBookingController#process');
+$router->map('GET|DELETE|PUT|POST|PATCH','/patient/booking','PatientBookingsController#process');
 /*************************** DRUGS ************************** */
 // App::addRoute("GET|POST", "/drugs/?", "Drugs");
 // App::addRoute("GET", "/drugs/[i:id]/?", "Drug");
@@ -53,8 +53,8 @@ $router->map('GET|PUT|DELETE|POST', '/specialities/[i:id]', 'SpecialityControlle
 $router->map('GET|POST','/specialities','SpecialitiesController#process');
 
 /***************************BOOKING*********************************** */
-$router->map('GET|DELETE|PUT','/bookings/[i:id]','BookingController#process');
-$router->map('GET|DELETE|PUT|POST','/bookings','BookingsController#process');
+$router->map('GET|DELETE|PUT|PATCH','/bookings/[i:id]','BookingController#process');
+$router->map('GET|DELETE|PUT|POST|PATCH','/bookings','BookingsController#process');
 
 
 /***************************ROOM*********************************** */

@@ -1,7 +1,4 @@
 <?php
-use Firebase\JWT\JWT;
-use Firebase\JWT\ExpiredException;
-use Firebase\JWT\Key;
 require_once APPPATH.'/Core/Input.php';
 class LoginController extends Controller{
     public function process()

@@ -161,8 +161,8 @@ use Firebase\JWT\Key;
                 $Authorization =$headers['authorization'];
             }
             //echo($Authorization);
-            $matches = array();
-            preg_match('/JWT (.*)/', $Authorization, $matches);
+            //$matches = array();
+            //preg_match('/JWT (.*)/', $Authorization, $matches);
             //Atention
             //$jwt = $matches[1];
             
