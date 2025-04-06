@@ -19,7 +19,7 @@
 
 
 /**************************LOGIN***************************** */
-$router->map('POST','/login/?','LoginController#process');
+$router->map('POST|GET','/login/?','LoginController#process');
 /**************************SIGNUP********************************/
 $router->map('POST','/signup/?','SignupController#process');
 

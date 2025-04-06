@@ -4,6 +4,8 @@ require_once APPPATH.'/Core/Input.php';
 use Firebase\JWT\JWT;
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\Key;
+use PayPal\Api\Authorization;
+
     class PatientBookingsController extends Controller{
         public function process(){
             $jwt = null;
@@ -151,14 +153,14 @@ use Firebase\JWT\Key;
             $this->resp->result = 0;
             $AuthUser = $this->getVariable("AuthUser");
             $headers = apache_request_headers();
-            //$jwt ='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTMsImVtYWlsIjoiIiwicGhvbmUiOiIwMTIzNDU2NzkxIiwibmFtZSI6IjAxMjM0NTY3OTEiLCJnZW5kZXIiOjAsImJpcnRoZGF5IjoiIiwiYWRkcmVzcyI6IiIsImF2YXRhciI6IiIsImNyZWF0ZV9hdCI6IjIwMjQtMTEtMjMgMDM6MDg6MDciLCJ1cGRhdGVfYXQiOiIyMDI0LTExLTIzIDAzOjA4OjA3IiwiaGFzaFBhc3MiOiI1NGZhMzgwYzNmOWY5ZTQ0MGVkNTcyZmVkOTUwYTk2OCIsImlhdCI6MTczMjMzMTI4N30.PRhI51Pl5uZvQPkbpfunQuHAv8vDKj5tjp_mWPCq3F4';
+            //$jwt ='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZW1haWwiOiIiLCJwaG9uZSI6IjAxMjM0NTY3ODkiLCJuYW1lIjoiMDEyMzQ1Njc4OSIsImdlbmRlciI6MCwiYmlydGhkYXkiOiIiLCJhZGRyZXNzIjoiIiwiYXZhdGFyIjoiIiwiY3JlYXRlX2F0IjoiMjAyNS0wMy0xMiAwMzowODo1NiIsInVwZGF0ZV9hdCI6IjIwMjUtMDMtMTIgMDM6MDg6NTYiLCJoYXNoUGFzcyI6Ijg5MWEyYjI1NDA0ZjdhYWEwYmFiYTM1Y2E0YTUyOWZjIiwiaWF0IjoxNzQzOTUyNDAxfQ.s5mJVE_f77f-cy0YPP2lZpcEv3GhlgCLLu3RUVRen40';
             $Authorization = null;
             $headers = getallheaders();
             if (isset($headers['Authorization'])) {
                 $Authorization =$headers['Authorization'];
             }
-            if (isset($headers['authorization'])) {
-                $Authorization =$headers['authorization'];
+            if (!isset($Authorization) && isset($_COOKIE['accessToken'])) {
+                $Authorization = $_COOKIE['accessToken'];
             }
             //echo($Authorization);
             //$matches = array();
