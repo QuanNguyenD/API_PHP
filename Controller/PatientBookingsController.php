@@ -191,10 +191,7 @@ use PayPal\Api\Authorization;
             //$doctor_id = (int)Input::post("doctor_id");
             $service_id = Input::post("service_id") != null ? (int)Input::post("service_id") : 1;
             $name = $decoded->name;
-            $phone = $decoded->phone;
-            $gender = $decoded->gender;
-            $birthday = $decoded->birthday;
-            $address = $decoded->address;
+            
 
 
             $appointment_time = Input::post("appointment_time");

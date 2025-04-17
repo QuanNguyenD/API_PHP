@@ -92,13 +92,7 @@ class LoginController extends Controller{
         $password = Input::post("password");
         $email = Input::post("email");
         
-        // $input = file_get_contents('php://input');
-        // $data = json_decode($input, true);
-
-        //$email = $data['email'] ?? null;
-        //$password = $data['password'] ?? null;
         
-        /**Step 2 - is email empty ? */
         if( !$email )
         {
             $this->resp->msg = "Email can not be empty !";
